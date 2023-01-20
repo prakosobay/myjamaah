@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Traits\Uuid;
+use App\Trait\Uuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\{Model, SoftDeletes};
 
