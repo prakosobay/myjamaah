@@ -2,38 +2,38 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MasterKawasan;
+use App\Models\MasterSalary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{DB};
 
-class KawasanController extends Controller
+class SalaryController extends Controller
 {
     public function table()
     {
-        $kawasans = MasterKawasan::with(['updatedBy:id,name', 'createdBy:id,name'])->get();
-        return view('master.kawasan', compact('kawasans'));
+        $salaries = MasterSalary::with(['updatedBy:id,name', 'createdBy:id,name'])->get();
+        return view('master.salary', compact('salaries'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'rt' => ['required', 'numeric', 'digits:3'],
-            'rw' => ['required', 'numeric', 'digits:3'],
+            'mulai' => ['required', 'numeric'],
+            'sampai' => ['required', 'numeric'],
         ]);
 
         DB::beginTransaction();
 
         try {
 
-            MasterKawasan::firstOrCreate([
-                'rt' => $request->rt,
-                'rw' => $request->rw,
-                'updated_by' => auth()->user()->id,
+            MasterSalary::firstOrCreate([
+                'mulai' => $request->mulai,
+                'sampai' => $request->sampai,
                 'created_by' => auth()->user()->id,
+                'updated_by' => auth()->user()->id,
             ]);
 
             DB::commit();
-            return redirect()->route('kawasanTable')->with('status', 'Data Berhasil di Tambah');
+            return redirect()->route('salaryTable')->with('success', 'Data Berhasil di Tambah');
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->with('failed', $e->getMessage());
@@ -46,11 +46,11 @@ class KawasanController extends Controller
 
         try {
 
-            $get = MasterKawasan::findOrFail($id);
+            $get = MasterSalary::findOrFail($id);
             $get->delete();
 
             DB::commit();
-            return redirect()->route('kawasanTable')->with('success', 'Data Berhasil di Hapus');
+            return redirect()->route('salaryTable')->with('success', 'Data Berhasil di Hapus');
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->with('failed', $e->getMessage());

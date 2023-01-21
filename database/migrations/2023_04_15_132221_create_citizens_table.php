@@ -22,14 +22,14 @@ return new class extends Migration
             $table->foreignUuid('m_education_id')->constrained('m_educations')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignUuid('m_residence_status_id')->constrained('m_residence_statuses')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignUuid('m_social_status_id')->constrained('m_social_statuses')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignUuid('m_rt_id')->constrained('kawasans')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignUuid('m_rw_id')->constrained('kawasans')->onDelete('cascade')->onUpdate('cascade');
             $table->string('kk_number')->unique();
             $table->string('nik_number')->unique();
             $table->string('name');
             $table->date('birthday');
             $table->string('gender');
             $table->string('street');
-            $table->tinyInteger('rt');
-            $table->tinyInteger('rw');
             $table->tinyInteger('house_number');
             $table->string('phone')->unique();
             $table->smallInteger('age');

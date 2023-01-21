@@ -18,58 +18,62 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Data Master
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="{{ route('familyStatusTable')}}">Status Keluarga</a></li>
-                    <li><a class="dropdown-item" href="{{ route('kawasanTable')}}">RT/RW</a></li>
-                    <li><a class="dropdown-item" href="{{ route('religionTable')}}">Agama</a></li>
-                    <li><a class="dropdown-item" href="{{ route('educationTable')}}">Pendidikan</a></li>
-                    <li><a class="dropdown-item" href="{{ route('residenceStatusTable')}}">Status Rumah</a></li>
-                    <li><a class="dropdown-item" href="{{ route('jobTable')}}">Pekerjaan</a></li>
-                    <li><a class="dropdown-item" href="{{ route('salaryTable')}}">Penghasilan Per Bulan</a></li>
-                </ul>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Data Master
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{{ route('familyStatusTable')}}">Status Keluarga</a></li>
+                        <li><a class="dropdown-item" href="{{ route('citizenTable')}}">Jamaah</a></li>
+                        <li><a class="dropdown-item" href="{{ route('kawasanTable')}}">RT/RW</a></li>
+                        <li><a class="dropdown-item" href="{{ route('religionTable')}}">Agama</a></li>
+                        <li><a class="dropdown-item" href="{{ route('educationTable')}}">Pendidikan</a></li>
+                        <li><a class="dropdown-item" href="{{ route('residenceStatusTable')}}">Status Rumah</a></li>
+                        <li><a class="dropdown-item" href="{{ route('jobTable')}}">Pekerjaan</a></li>
+                        <li><a class="dropdown-item" href="{{ route('salaryTable')}}">Penghasilan Per Bulan</a></li>
+                        <li><a class="dropdown-item" href="{{ route('socialStatusTable')}}">Status Social</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item ms-auto">
+                    <ul class="navbar-nav">
+                        <!-- Authentication Links -->
+                        @guest
+                            @if (Route::has('login'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                </li>
+                            @endif
 
-                <ul class="navbar-nav">
-                    <!-- Authentication Links -->
-                    @guest
-                        @if (Route::has('login'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                        @endif
-
-                        @if (Route::has('register'))
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                            </li>
-                        @endif
-                    @else
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }}
-                            </a>
-
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                   onclick="event.preventDefault();
-                                                 document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
+                            @if (Route::has('register'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                </li>
+                            @endif
+                        @else
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ Auth::user()->name }}
                                 </a>
 
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                            </div>
-                        </li>
-                    @endguest
-                </ul>
-            </li>
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                                    document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </li>
+                        @endguest
+                    </ul>
+                </li>
+            </ul>
         </div>
     </nav>
 

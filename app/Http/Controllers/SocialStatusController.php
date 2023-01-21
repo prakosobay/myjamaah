@@ -2,38 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MasterKawasan;
+use App\Models\MasterSocialStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{DB};
 
-class KawasanController extends Controller
+class SocialStatusController extends Controller
 {
     public function table()
     {
-        $kawasans = MasterKawasan::with(['updatedBy:id,name', 'createdBy:id,name'])->get();
-        return view('master.kawasan', compact('kawasans'));
+        $socialStatuses = MasterSocialStatus::with(['createdBy:id,name', 'updatedBy:id,name'])->get();
+        return view('master.socialStatus', compact('socialStatuses'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'rt' => ['required', 'numeric', 'digits:3'],
-            'rw' => ['required', 'numeric', 'digits:3'],
+            'name' => ['required', 'string', 'max:255'],
         ]);
 
         DB::beginTransaction();
 
         try {
 
-            MasterKawasan::firstOrCreate([
-                'rt' => $request->rt,
-                'rw' => $request->rw,
+            MasterSocialStatus::firstOrCreate([
+                'name' => $request->name,
                 'updated_by' => auth()->user()->id,
                 'created_by' => auth()->user()->id,
             ]);
 
             DB::commit();
-            return redirect()->route('kawasanTable')->with('status', 'Data Berhasil di Tambah');
+            return redirect()->route('socialStatusTable')->with('success', 'Data Berhasil di Tambah');
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->with('failed', $e->getMessage());
@@ -46,11 +44,11 @@ class KawasanController extends Controller
 
         try {
 
-            $get = MasterKawasan::findOrFail($id);
+            $get = MasterSocialStatus::findOrFail($id);
             $get->delete();
 
             DB::commit();
-            return redirect()->route('kawasanTable')->with('success', 'Data Berhasil di Hapus');
+            return redirect()->route('socialStatusTable')->with('success', 'Data Berhasil di Hapus');
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->with('failed', $e->getMessage());

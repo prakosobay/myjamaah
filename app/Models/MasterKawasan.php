@@ -6,16 +6,16 @@ use App\Trait\Uuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\{Model, SoftDeletes};
 
-class MasterSalary extends Model
+class MasterKawasan extends Model
 {
     use HasFactory, SoftDeletes, Uuid;
 
-    protected $table = 'm_salaries';
+    protected $table = 'm_kawasans';
     protected $fillable = [
-        'mulai',
-        'sampai',
-        'created_by',
+        'rt',
+        'rw',
         'updated_by',
+        'created_by',
     ];
 
     public function createdBy()

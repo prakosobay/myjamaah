@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('m_salaries', function (Blueprint $table) {
+        Schema::create('m_kawasans', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->unsignedSmallInteger('rt');
+            $table->unsignedSmallInteger('rw');
             $table->foreignUuid('created_by')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignUuid('updated_by')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedInteger('mulai');
-            $table->unsignedInteger('sampai');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('m_salaries');
+        Schema::dropIfExists('m_kawasans');
     }
 };
