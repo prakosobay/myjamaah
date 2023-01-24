@@ -19,8 +19,8 @@ class Citizen extends Model
         'birthday',
         'gender',
         'street',
-        'm_rt_id',
-        'm_rw_id',
+        'rt',
+        'rw',
         'house_number',
         'phone',
         'age',
@@ -34,6 +34,53 @@ class Citizen extends Model
         'm_social_status_id',
         'is_death',
         'death_date',
+        'created_by',
+        'updated_by',
     ];
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function updatedBy()
+    {
+        return $this->belongsTo(User::class, 'updated_by');
+    }
+
+    public function mJobId()
+    {
+        return $this->belongsTo(MasterJob::class, 'm_job_id');
+    }
+
+    public function mSalaryId()
+    {
+        return $this->belongsTo(MasterSalary::class, 'm_salary_id');
+    }
+
+    public function mReligionId()
+    {
+        return $this->belongsTo(MasterReligion::class, 'm_religion_id');
+    }
+
+    public function mFamilyStatusId()
+    {
+        return $this->belongsTo(MasterFamilyStatus::class, 'm_family_status_id');
+    }
+
+    public function mEducationId()
+    {
+        return $this->belongsTo(MasterEducation::class, 'm_education_id');
+    }
+
+    public function mResidenceStatusId()
+    {
+        return $this->belongsTo(MasterResidenceStatus::class, 'm_residence_status_id');
+    }
+
+    public function mSocialStatusId()
+    {
+        return $this->belongsTo(MasterSocialStatus::class, 'm_social_status_id');
+    }
 
 }

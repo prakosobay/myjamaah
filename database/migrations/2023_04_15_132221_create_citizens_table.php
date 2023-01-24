@@ -22,8 +22,10 @@ return new class extends Migration
             $table->foreignUuid('m_education_id')->constrained('m_educations')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignUuid('m_residence_status_id')->constrained('m_residence_statuses')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignUuid('m_social_status_id')->constrained('m_social_statuses')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignUuid('m_rt_id')->constrained('kawasans')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignUuid('m_rw_id')->constrained('kawasans')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignUuid('created_by')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignUuid('updated_by')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedSmallInteger('rt');
+            $table->unsignedSmallInteger('rw');
             $table->string('kk_number')->unique();
             $table->string('nik_number')->unique();
             $table->string('name');
@@ -34,8 +36,8 @@ return new class extends Migration
             $table->string('phone')->unique();
             $table->smallInteger('age');
             $table->string('marriage_status');
-            $table->boolean('is_death', 0);
-            $table->date('death_date');
+            $table->boolean('is_death')->nullable();
+            $table->date('death_date')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\{AuthController, CitizenController, DashboardController, EducationController, FamilyStatusController, JobController, KawasanController, ReligionController, ResidenceStatusController, SalariesController, SalaryController, SocialStatusController};
+use App\Http\Controllers\{AuthController, CitizenController, DashboardController, EducationController, FamilyStatusController, JobController, KawasanController, ReligionController, ResidenceStatusController, RtRwController, SalariesController, SalaryController, SocialStatusController};
 use App\Models\MasterSocialStatus;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -39,10 +39,10 @@ Route::middleware(['auth'])->group(function(){
         Route::post('family-status/delete/{id}', 'delete')->name('familyStatusDelete');
     });
 
-    Route::controller(KawasanController::class)->group(function(){
-        Route::get('kawasan/table', 'table')->name('kawasanTable');
-        Route::post('kawasan/store', 'store')->name('kawasanStore');
-        Route::post('kawasan/delete/{id}', 'delete')->name('kawasanDelete');
+    Route::controller(RtRwController::class)->group(function(){
+        Route::get('rtrw/table', 'table')->name('rtrwTable');
+        Route::post('rtrw/store', 'store')->name('rtrwStore');
+        Route::post('rtrw/delete/{id}', 'delete')->name('rtrwDelete');
     });
 
     Route::controller(ReligionController::class)->group(function(){
@@ -85,6 +85,7 @@ Route::middleware(['auth'])->group(function(){
         Route::get('citizen/table', 'table')->name('citizenTable');
         Route::get('citizen/add', 'add')->name('citizenAdd');
         Route::get('citizen/view/{id}', 'view')->name('citizenView');
+        Route::get('citizen/edit/{id}', 'edit')->name('citizenEdit');
         Route::post('citizen/store', 'store')->name('citizenStore');
         Route::post('citizen/update/{id}', 'update')->name('citizenUpdate');
         Route::post('citizen/delete/{id}', 'delete')->name('citizenDelete');

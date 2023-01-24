@@ -33,9 +33,10 @@
                         <tr class="judul-table text-center">
                             <th>No. </th>
                             <th>Nama</th>
-                            <th>Updated By</th>
-                            <th>Updated At</th>
-                            <th>Action</th>
+                            <th>No. KK</th>
+                            <th>Agama</th>
+                            <th>Tanggal Lahir</th>
+                            <th>Pilihan</th>
                         </tr>
                     </thead>
                     <tbody class="isi-table text-center">
@@ -51,22 +52,26 @@
                                         </div>
                                         <div class="modal-body">
                                             <div class="form-group">
-                                                <button class="btn btn-danger mx-1 my-1" type="submit">Yes</button>
-                                                <button class="btn btn-secondary mx-1 my-1" data-dismiss="modal" type="button">No</button>
+                                                <button class="btn btn-danger mx-1 my-1" type="submit">Hapus</button>
+                                                <button class="btn btn-secondary mx-1 my-1" data-dismiss="modal" type="button">Tidak</button>
                                             </div>
                                         </div>
                                     </div>
                                 </form>
                             </div>
                         </div>
+
                         <tr>
                             <td>{{ $loop->iteration  }}</td>
                             <td>{{ $citizen->name }}</td>
-                            <td>{{ $citizen->updatedBy->name }}</td>
-                            <td>{{ $citizen->updated_at }}</td>
+                            <td>{{ $citizen->nik_number }}</td>
+                            <td>{{ $citizen->mReligionId->name }}</td>
+                            <td>{{ Carbon\Carbon::parse($citizen->birthday)->format('d-m-Y') }}</td>
                             <td>
+                                <a href="{{ route('citizenView', $citizen->id)}}" class="btn-success btn-sm btn mx-1 my-1">Detail</a>
+                                <a href="{{ route('citizenEdit', $citizen->id)}}" class="btn-warning btn-sm btn mx-1 my-1">Perbarui</a>
                                 <button type="button" class="btn btn-danger btn-sm mx-1 my-1" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $citizen->id }}" data-id="{{ $citizen->id }}">
-                                    Delete
+                                    Hapus
                                 </button>
                             </td>
                         </tr>

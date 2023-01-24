@@ -10,12 +10,12 @@
         </div>
         <div class="card-header py-3">
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                Tambah Data
+                Tambah RT
             </button>
 
             <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
-                    <form method="post" action="{{ route('kawasanStore')}}">
+                    <form method="post" action="{{ route('rtrwStore')}}">
                         @csrf
                         <div class="modal-content">
                             <div class="modal-header">
@@ -67,11 +67,11 @@
                         </tr>
                     </thead>
                     <tbody class="isi-table text-center">
-                        @foreach ( $kawasans as $kawasan )
+                        @foreach ( $getRt as $rt )
                         <!-- Modal -->
-                        <div class="modal fade" id="deleteModal{{ $kawasan->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel{{ $kawasan->id }}" aria-hidden="true">
+                        <div class="modal fade" id="deleteModal{{ $rt->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel{{ $rt->id }}" aria-hidden="true">
                             <div class="modal-dialog" role="document">
-                                <form method="post" action="{{ route('kawasanDelete', $kawasan->id)}}">
+                                <form method="post" action="{{ route('rtrwDelete', $rt->id)}}">
                                     @csrf
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -89,12 +89,12 @@
                         </div>
                         <tr>
                             <td>{{ $loop->iteration  }}</td>
-                            <td>{{ $kawasan->rt }}</td>
-                            <td>{{ $kawasan->rw }}</td>
-                            <td>{{ $kawasan->updatedBy->name }}</td>
-                            <td>{{ $kawasan->updated_at }}</td>
+                            <td>{{ $rt->rt }}</td>
+                            <td>{{ $rt->mRwId->number }}</td>
+                            <td>{{ $rt->updatedBy->name }}</td>
+                            <td>{{ $rt->updated_at }}</td>
                             <td>
-                                <button type="button" class="btn btn-danger btn-sm mx-1 my-1" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $kawasan->id }}" data-id="{{ $kawasan->id }}">
+                                <button type="button" class="btn btn-danger btn-sm mx-1 my-1" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $rt->id }}" data-id="{{ $rt->id }}">
                                     Delete
                                 </button>
                             </td>

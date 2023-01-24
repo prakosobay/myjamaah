@@ -44,7 +44,7 @@
                         <div class="col-4">
                             <div class="form-group my-2">
                                 <label for="name" class="form-label"><b>Nama :</b></label>
-                                <input type="text" id="name" value="{{ old('name')}}" name="name" class="form-control @error('name') is-invalid @enderror" required autocomplete="email" autofocus>
+                                <input type="text" id="name" value="{{ old('name')}}" name="name" class="form-control @error('name') is-invalid @enderror" required autocomplete="name" autofocus>
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -65,8 +65,8 @@
                             <div class="form-group my-2">
                                 <label for="gender" class="form-label"><b>Jenis Kelamin :</b></label>
                                 <select name="gender" id="gender" class="form-select" required>
-                                    <option value="male">Laki-laki</option>
-                                    <option value="female">Perempuan</option>
+                                    <option value="Laki-laki">Laki-laki</option>
+                                    <option value="Perempuan">Perempuan</option>
                                 </select>
                             </div>
                         </div>
@@ -95,16 +95,20 @@
                                 <label for="rt" class="form-label"><b>RT :</b></label>
                                 <select name="rt" id="rt" class="form-select" required>
                                     <option value=""></option>
-                                    @foreach ( $kawasans as $rt )
-                                        <option value="{{ $id }}"></option>
-                                    @endforeach
+                                    @for ( $i = 1; $i < 14; $i++)
+                                        <option value="{{$i}}">{{$i}}</option>
+                                    @endfor
                                 </select>
                             </div>
                         </div>
                         <div class="col-2">
                             <div class="form-group my-2">
                                 <label for="rw" class="form-label"><b>RW :</b></label>
-                                <input type="text" id="rw" name="rw" value="{{ old('rw')}}" class="form-control" required>
+                                <select name="rw" id="rw" class="form-select" required>
+                                    <option value=""></option>
+                                    <option value="04">04</option>
+                                    <option value="06">06</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-2">
@@ -145,8 +149,11 @@
                                 </select>
                             </div>
                             <div class="form-group my-2">
-                                <label for="death_date" class="form-label"><b>Tanggal Meninggal :</b></label>
-                                <input type="date" id="death_date" value="{{ old('death_date')}}" name="death_date" class="form-control">
+                                <label for="flexCheckDefault" class="form-label"><b>Keterangan :</b></label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault" name="is_death">
+                                    <label class="form-check-label" for="flexCheckDefault">Meninggal</label>
+                                </div>
                             </div>
                         </div>
                         <div class="col-4">
@@ -162,6 +169,7 @@
                             <div class="form-group my-2">
                                 <label for="marriageStatus" class="form-label"><b>Status Perkawinan :</b></label>
                                 <select name="marriageStatus" id="marriageStatus" class="form-select" required>
+                                    <option value=""></option>
                                     <option value="single">Belom Kawin</option>
                                     <option value="married">Kawin</option>
                                     <option value="duda">Duda</option>
@@ -176,6 +184,10 @@
                                         <option value="{{ $socialStatus->id }}">{{ $socialStatus->name }}</option>
                                     @endforeach
                                 </select>
+                            </div>
+                            <div class="form-group my-2">
+                                <label for="death_date" class="form-label"><b>Tanggal Meninggal :</b></label>
+                                <input type="date" id="death_date" value="{{ old('death_date')}}" name="death_date" class="form-control">
                             </div>
                         </div>
                         <div class="col-4">
@@ -197,19 +209,12 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="form-group my-2">
-                                <label for="isDeath" class="form-label"><b>Meninggal :</b></label>
-                                <select name="isDeath" id="isDeath" class="form-select" required>
-                                    <option value="1">Ya</option>
-                                    <option value="0">Belom</option>
-                                </select>
-                            </div>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-12">
-                            <button class="btn-primary btn my-1 mx-1" type="submit" id="citizenForm">Submit</button>
+                            <button class="btn-primary btn my-1 mx-1" type="submit" id="citizenForm">Simpan</button>
                         </div>
                     </div>
                 </form>

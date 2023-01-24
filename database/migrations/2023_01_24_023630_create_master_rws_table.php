@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('m_family_statuses', function (Blueprint $table) {
+        Schema::create('m_rws', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->foreignUuid('created_by')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignUuid('updated_by')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->string('name');
+            $table->foreignUuid('created_by')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignUuid('updated_by')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedSmallInteger('number');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('m_family_statuses');
+        Schema::dropIfExists('m_rws');
     }
 };

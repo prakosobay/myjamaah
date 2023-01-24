@@ -31,19 +31,19 @@ class CitizenRequest extends FormRequest
             'kk' => ['required', 'numeric'],
             'phone' => ['required', 'string'],
             'street' => ['required', 'string'],
-            'rt' => ['required', 'numeric'],
-            'rw' => ['required', 'numeric'],
             'house_number' => ['required', 'numeric'],
             'job' => ['required', 'uuid'],
             'education' => ['required', 'uuid'],
             'residenceStatus' => ['required', 'uuid'],
             'salary' => ['required', 'uuid'],
-            'marriageStatus' => ['required', 'uuid'],
+            'marriageStatus' => ['required', 'string', 'max:255'],
             'socialStatus' => ['required', 'uuid'],
             'religion' => ['required', 'uuid'],
             'familyStatus' => ['required', 'uuid'],
-            'isDeath' => ['required', 'boolean'],
+            'is_death' => ['nullable', 'boolean'],
             'death_date' => ['nullable', 'date'],
+            'rt' => ['required', 'numeric'],
+            'rw' => ['required', 'numeric'],
         ];
     }
 }

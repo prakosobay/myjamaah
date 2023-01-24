@@ -6,16 +6,15 @@ use App\Trait\Uuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\{Model, SoftDeletes};
 
-class MasterKawasan extends Model
+class MasterRw extends Model
 {
     use HasFactory, SoftDeletes, Uuid;
 
-    protected $table = 'm_kawasans';
+    protected $table = 'm_rws';
     protected $fillable = [
-        'rt',
-        'rw',
-        'updated_by',
+        'number',
         'created_by',
+        'updated_by',
     ];
 
     public function createdBy()
