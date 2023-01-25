@@ -10,7 +10,7 @@ class ReligionController extends Controller
 {
     public function table()
     {
-        $religions = MasterReligion::with(['updatedBy:id,name', 'createdBy:id,name'])->get();
+        $religions = MasterReligion::with(['updatedBy:id,name', 'createdBy:id,name'])->orderBy('name', 'asc')->get();
         return view('master.religion', compact('religions'));
     }
 

@@ -10,7 +10,7 @@ class FamilyStatusController extends Controller
 {
     public function table()
     {
-        $get = MasterFamilyStatus::all();
+        $get = MasterFamilyStatus::with(['updatedBy:id,name'])->orderBy('name', 'asc')->get();
         return view('master.familyStatus', compact('get'));
     }
 
@@ -53,10 +53,5 @@ class FamilyStatusController extends Controller
             DB::rollBack();
             return back()->with('failed', $e->getMessage());
         }
-    }
-
-    public function select()
-    {
-        $getAll = MasterFamilyStatus::all();
     }
 }

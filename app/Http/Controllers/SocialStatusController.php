@@ -10,7 +10,7 @@ class SocialStatusController extends Controller
 {
     public function table()
     {
-        $socialStatuses = MasterSocialStatus::with(['createdBy:id,name', 'updatedBy:id,name'])->get();
+        $socialStatuses = MasterSocialStatus::with(['createdBy:id,name', 'updatedBy:id,name'])->orderBy('name', 'asc')->get();
         return view('master.socialStatus', compact('socialStatuses'));
     }
 

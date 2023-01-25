@@ -10,7 +10,7 @@ class JobController extends Controller
 {
     public function table()
     {
-        $jobs = MasterJob::with(['updatedBy:id,name', 'createdBy:id,name'])->get();
+        $jobs = MasterJob::with(['updatedBy:id,name', 'createdBy:id,name'])->orderBy('name', 'asc')->get();
         return view('master.job', compact('jobs'));
     }
 

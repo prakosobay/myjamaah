@@ -89,6 +89,7 @@ Route::middleware(['auth'])->group(function(){
         Route::post('citizen/store', 'store')->name('citizenStore');
         Route::post('citizen/update/{id}', 'update')->name('citizenUpdate');
         Route::post('citizen/delete/{id}', 'delete')->name('citizenDelete');
+        Route::post('citizen/import', 'import')->name('citizenImport');
     });
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -10,7 +10,7 @@ class SalaryController extends Controller
 {
     public function table()
     {
-        $salaries = MasterSalary::with(['updatedBy:id,name', 'createdBy:id,name'])->get();
+        $salaries = MasterSalary::with(['updatedBy:id,name', 'createdBy:id,name'])->orderBy('mulai', 'asc')->get();
         return view('master.salary', compact('salaries'));
     }
 

@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.dashboard')
 
 @section('content')
 
@@ -12,6 +12,10 @@
             <a type="button" class="btn btn-primary" href="{{ route('citizenAdd')}}">
                 Tambah Data
             </a>
+
+            <button type="button" class="btn btn-success mx-2" data-bs-toggle="modal" data-bs-target="#importModal">
+                Import Excel
+            </button>
         </div>
 
         @if (session('success'))
@@ -28,7 +32,7 @@
 
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-striped table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-hover table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr class="judul-table text-center">
                             <th>No. </th>
@@ -80,6 +84,30 @@
                 </table>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- Modal Import-->
+<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form method="post" action="{{ route('citizenImport')}}" enctype="file">
+            @csrf
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Import Excel</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="file" class="form-label">Pilih File Excel</label>
+                        <input type="file" class="form-control" id="file" name="file" required>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-danger mx-1 my-1" type="submit">Simpan</button>
+                        <button class="btn btn-secondary mx-1 my-1" data-dismiss="modal" type="button">Tidak</button>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 

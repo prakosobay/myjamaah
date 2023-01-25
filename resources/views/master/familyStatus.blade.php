@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.dashboard')
 
 @section('content')
 
@@ -51,7 +51,7 @@
 
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-striped table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-hover table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr class="judul-table text-center">
                             <th>No. </th>
@@ -85,7 +85,7 @@
                         <tr>
                             <td>{{ $loop->iteration  }}</td>
                             <td>{{ $status->name }}</td>
-                            <td>{{ $status->updated_by }}</td>
+                            <td>{{ $status->updatedBy->name }}</td>
                             <td>{{ $status->updated_at }}</td>
                             <td>
                                 <button type="button" class="btn btn-danger btn-sm mx-1 my-1" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $status->id }}" data-id="{{ $status->id }}">

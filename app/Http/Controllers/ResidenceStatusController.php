@@ -10,7 +10,7 @@ class ResidenceStatusController extends Controller
 {
     public function table()
     {
-        $residenceStatuses = MasterResidenceStatus::with(['createdBy:id,name', 'updatedBy:id,name'])->get();
+        $residenceStatuses = MasterResidenceStatus::with(['createdBy:id,name', 'updatedBy:id,name'])->orderBy('name', 'asc')->get();
         return view('master.residenceStatus', compact('residenceStatuses'));
     }
 

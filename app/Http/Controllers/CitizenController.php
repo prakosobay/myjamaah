@@ -171,4 +171,22 @@ class CitizenController extends Controller
             return back()->with('failed', $e->getMessage());
         }
     }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => ['required', 'file'],
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+
+            DB::commit();
+            return redirect()->route('citizenTable')->with('success', 'Berhasil di Import');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('failed', $e->getMessage());
+        }
+    }
 }
