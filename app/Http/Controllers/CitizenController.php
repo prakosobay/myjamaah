@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CitizenRequest;
+use App\Imports\CitizenImport;
 use App\Models\{MasterReligion, Citizen, MasterEducation, MasterFamilyStatus, MasterJob, MasterResidenceStatus, MasterSalary, MasterSocialStatus};
 use Illuminate\Http\Request;
 use Illuminate\Support\{Carbon};
 use Illuminate\Support\Facades\{DB};
+use Maatwebsite\Excel\Facades\Excel;
 
 class CitizenController extends Controller
 {
@@ -174,19 +176,36 @@ class CitizenController extends Controller
 
     public function import(Request $request)
     {
+        // dd($request);
         $request->validate([
             'file' => ['required', 'file'],
         ]);
 
+        $citizens = Citizen::select('id')->get()->count();
+
         DB::beginTransaction();
+
+        // Excel::import(new CitizenImport, request()->file('file'));
+
+        // $after = Citizen::select('id')->get()->count();
+        // DB::commit();
+        // if($after > $citizens) {
+
+        //     return redirect()->route('citizenTable')->with('success', 'Berhasil di Import');
+
+        // } else {
+        //     DB::rollBack();
+        //     return back()->with('failed', 'Mohon Untuk Cek Data Excel Kembali');
+        // }
 
         try {
 
+            Excel::import(new CitizenImport, request()->file('file'));
             DB::commit();
             return redirect()->route('citizenTable')->with('success', 'Berhasil di Import');
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->with('failed', $e->getMessage());
+            return back()->with('failed', $e);
         }
     }
 }

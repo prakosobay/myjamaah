@@ -6,7 +6,7 @@
     {{-- datatable --}}
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h1 class="h3 mb-2 text-gray-800 text-center">Data Jamaah</h1>
+            <h1 class="h3 mb-2 text-gray-800 text-center"><b>Data Jamaah</b></h1>
         </div>
         <div class="card-header py-3">
             <a type="button" class="btn btn-primary" href="{{ route('citizenAdd')}}">
@@ -90,7 +90,7 @@
 <!-- Modal Import-->
 <div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form method="post" action="{{ route('citizenImport')}}" enctype="file">
+        <form method="post" action="{{ route('citizenImport')}}" enctype="multipart/form-data">
             @csrf
             <div class="modal-content">
                 <div class="modal-header">

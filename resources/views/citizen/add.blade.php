@@ -6,7 +6,7 @@
     {{-- datatable --}}
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h1 class="h3 mb-2 text-gray-800 text-center">Data Jamaah</h1>
+            <h1 class="h3 mb-2 text-gray-800 text-center"><b>Data Jamaah</b></h1>
         </div>
         <div class="card-header py-3">
             <a type="button" class="btn btn-primary" href="{{ route('citizenTable')}}">
@@ -78,7 +78,7 @@
                             </div>
                             <div class="form-group my-2">
                                 <label for="phone" class="form-label"><b>No. Telepon :</b></label>
-                                <input type="text" id="phone" name="phone" value="{{ old('phone')}}" class="form-control" required>
+                                <input type="text" id="phone" name="phone" value="{{ old('phone')}}" class="form-control" placeholder="Gunakan +62 xxxx" required>
                             </div>
                         </div>
                     </div>
