@@ -23,7 +23,6 @@ class Citizen extends Model
         'rw',
         'house_number',
         'phone',
-        'age',
         'marriage_status',
         'm_job_id',
         'm_salary_id',

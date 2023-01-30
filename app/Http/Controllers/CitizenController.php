@@ -61,7 +61,6 @@ class CitizenController extends Controller
                 'm_family_status_id' => $request->familyStatus,
                 'is_death' => $request->is_death,
                 'death_date' => $request->death_date,
-                'age' => $age,
                 'created_by' => auth()->user()->id,
                 'updated_by' => auth()->user()->id,
             ]);
@@ -106,7 +105,6 @@ class CitizenController extends Controller
                 'm_family_status_id' => $request->familyStatus,
                 'is_death' => $request->is_death,
                 'death_date' => $request->death_date,
-                'age' => $age,
                 'updated_by' => auth()->user()->id,
             ]);
 
@@ -138,7 +136,10 @@ class CitizenController extends Controller
         $familyStatuses = MasterFamilyStatus::select('id', 'name')->orderBy('name', 'asc')->get();
         $residenceStatuses = MasterResidenceStatus::select('id', 'name')->orderBy('name', 'asc')->get();
         $socialStatuses = MasterSocialStatus::select('id', 'name')->orderBy('name', 'asc')->get();
-        return view('citizen.edit', compact('citizen', 'religions', 'jobs', 'salaries', 'educations', 'familyStatuses', 'residenceStatuses', 'socialStatuses'));
+        $now = Carbon::now();
+        $birthDay = Carbon::parse($citizen->birthday);
+        $age = $birthDay->diffInYears($now);
+        return view('citizen.edit', compact('citizen', 'religions', 'jobs', 'salaries', 'educations', 'familyStatuses', 'residenceStatuses', 'socialStatuses', 'age'));
     }
 
     public function view($id)
@@ -154,7 +155,12 @@ class CitizenController extends Controller
             'mResidenceStatusId:id,name',
             'mSocialStatusId:id,name',
         ])->where('id', $id)->first();
-        return view('citizen.view', compact('citizen'));
+
+        $now = Carbon::now();
+        $birthDay = Carbon::parse($citizen->birthday);
+        $age = $birthDay->diffInYears($now);
+
+        return view('citizen.view', compact('citizen', 'age'));
     }
 
     public function delete($id)

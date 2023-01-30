@@ -292,6 +292,10 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="form-group my-2">
+                                <label for="age" class="form-label"><b>Umur :</b></label>
+                                <input type="text" id="age" value="{{ $age }} Tahun" class="form-control" readonly>
+                            </div>
                         </div>
                     </div>
 

@@ -68,23 +68,19 @@ class CitizenImport implements ToCollection, WithHeadingRow
                 die;
             }
 
-            // $citizen = Citizen::where('nik_number', $row['nik'])->first();
             $convert = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tanggal_lahir']));
-            // dd($convert);
+            // dd($job->id);
 
-            $now = Carbon::now();
-            $birthDay = Carbon::parse($convert);
-            $age = $birthDay->diffInYears($now);
-            // dd($age);
-            $citizen = Citizen::updateOrCreate(
-                ['nik_number' => $row['nik'], ],
-                [
+            $citizen = Citizen::where('nik_number', $row['nik'])->first();
+            // dd($citizen);
+            if($citizen){
+
+                $citizen->update([
                     'kk_number' => $row['kk'],
                     'name' => $row['nama'],
                     'birthday' => $convert,
                     'gender' => $row['jenis_kelamin'],
                     'street' => $row['jalan'],
-                    'age' => $age,
                     'rt' => $row['rt'],
                     'rw' => $row['rw'],
                     'house_number' => $row['no_rumah'],
@@ -97,8 +93,58 @@ class CitizenImport implements ToCollection, WithHeadingRow
                     'm_education_id' => $education->id,
                     'm_residence_status_id' => $residenceStatus->id,
                     'm_social_status' => $socialStatus->id,
-                ]
-            );
+                ]);
+            } else {
+
+                $id = Str::uuid();
+                $citizen = Citizen::create([
+                    'id' => $id,
+                    'nik_number' => $row['nik'],
+                    'kk_number' => $row['kk'],
+                    'name' => $row['nama'],
+                    'birthday' => $convert,
+                    'gender' => $row['jenis_kelamin'],
+                    'street' => $row['jalan'],
+                    'rt' => $row['rt'],
+                    'rw' => $row['rw'],
+                    'house_number' => $row['no_rumah'],
+                    'phone' => $row['no_hp'],
+                    'm_job_id' => $job->id,
+                    'm_salary_id' => $salary->id,
+                    'm_religion_id' => $religion->id,
+                    'marriage_status' => $row['status_pernikahan'],
+                    'm_family_status_id' => $familyStatus->id,
+                    'm_education_id' => $education->id,
+                    'm_residence_status_id' => $residenceStatus->id,
+                    'm_social_status' => $socialStatus->id,
+                ]);
+            }
+
+            dd($citizen);die;
+            // dd($age);
+            // $citizen = Citizen::updateOrCreate(
+            //     ['nik_number' => $row['nik'], ],
+            //     [
+            //         'kk_number' => $row['kk'],
+            //         'name' => $row['nama'],
+            //         'birthday' => $convert,
+            //         'gender' => $row['jenis_kelamin'],
+            //         'street' => $row['jalan'],
+            //         'age' => $age,
+            //         'rt' => $row['rt'],
+            //         'rw' => $row['rw'],
+            //         'house_number' => $row['no_rumah'],
+            //         'phone' => $row['no_hp'],
+            //         'm_job_id' => $job->id,
+            //         'm_salary_id' => $salary->id,
+            //         'm_religion_id' => $religion->id,
+            //         'marriage_status' => $row['status_pernikahan'],
+            //         'm_family_status_id' => $familyStatus->id,
+            //         'm_education_id' => $education->id,
+            //         'm_residence_status_id' => $residenceStatus->id,
+            //         'm_social_status' => $socialStatus->id,
+            //     ]
+            // );
             // $citizen = Citizen::updateOrInsert(
             //     ['nik_number' => $row['nik'] ],
             //     [
@@ -122,7 +168,6 @@ class CitizenImport implements ToCollection, WithHeadingRow
             //         'm_social_status' => $socialStatus->id,
             //     ]
             // );
-            print_r($citizen);die;
         }
     }
 }
