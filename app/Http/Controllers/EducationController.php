@@ -10,7 +10,7 @@ class EducationController extends Controller
 {
     public function table()
     {
-        $educations = MasterEducation::with(['createdBy:id,name', 'updatedBy:id,name'])->orderBy('name', 'asc')->get();
+        $educations = MasterEducation::with(['createdBy:id,name', 'updatedBy:id,name'])->orderBy('updated_at', 'asc')->get();
         return view('master.education', compact('educations'));
     }
 

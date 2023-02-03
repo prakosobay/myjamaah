@@ -17,8 +17,8 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->foreignUuid('created_by')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignUuid('updated_by')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedInteger('mulai');
-            $table->unsignedInteger('sampai');
+            $table->double('mulai');
+            $table->double('sampai');
             $table->timestamps();
             $table->softDeletes();
         });

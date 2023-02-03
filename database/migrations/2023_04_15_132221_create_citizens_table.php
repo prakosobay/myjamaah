@@ -26,14 +26,14 @@ return new class extends Migration
             $table->foreignUuid('updated_by')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedSmallInteger('rt');
             $table->unsignedSmallInteger('rw');
-            $table->string('kk_number')->unique();
-            $table->string('nik_number')->unique();
+            $table->string('kk_number', 16)->unique();
+            $table->string('nik_number', 16)->unique();
             $table->string('name');
             $table->date('birthday');
             $table->string('gender');
             $table->string('street');
             $table->tinyInteger('house_number');
-            $table->string('phone')->unique();
+            $table->string('phone', 15)->unique();
             $table->string('marriage_status');
             $table->boolean('is_death')->nullable();
             $table->date('death_date')->nullable();

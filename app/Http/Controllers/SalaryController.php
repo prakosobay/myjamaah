@@ -17,15 +17,15 @@ class SalaryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'mulai' => ['required', 'numeric'],
-            'sampai' => ['required', 'numeric'],
+            'mulai' => ['required'],
+            'sampai' => ['required'],
         ]);
 
         DB::beginTransaction();
 
         try {
 
-            MasterSalary::firstOrCreate([
+            MasterSalary::create([
                 'mulai' => $request->mulai,
                 'sampai' => $request->sampai,
                 'created_by' => auth()->user()->id,

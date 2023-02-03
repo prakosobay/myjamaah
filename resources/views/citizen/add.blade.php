@@ -170,10 +170,10 @@
                                 <label for="marriageStatus" class="form-label"><b>Status Perkawinan :</b></label>
                                 <select name="marriageStatus" id="marriageStatus" class="form-select" required>
                                     <option value=""></option>
-                                    <option value="single">Belom Kawin</option>
-                                    <option value="married">Kawin</option>
-                                    <option value="duda">Duda</option>
-                                    <option value="janda">Janda</option>
+                                    <option value="Belom Kawin">Belom Kawin</option>
+                                    <option value="Kawin">Kawin</option>
+                                    <option value="Duda">Duda</option>
+                                    <option value="Janda">Janda</option>
                                 </select>
                             </div>
                             <div class="form-group my-2">

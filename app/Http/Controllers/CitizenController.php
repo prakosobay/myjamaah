@@ -32,10 +32,6 @@ class CitizenController extends Controller
 
     public function store(CitizenRequest $request)
     {
-        $now = Carbon::now();
-        $birthDay = Carbon::parse($request->birthday);
-        $age = $birthDay->diffInYears($now);
-
         DB::beginTransaction();
 
         try {
@@ -66,6 +62,7 @@ class CitizenController extends Controller
             ]);
 
             DB::commit();
+
             return redirect()->route('citizenTable')->with('success', 'Data Berhasil di Tambah');
         } catch (\Exception $e) {
             DB::rollBack();
@@ -75,10 +72,6 @@ class CitizenController extends Controller
 
     public function update(CitizenRequest $request, $id)
     {
-        $now = Carbon::now();
-        $birthDay = Carbon::parse($request->birthday);
-        $age = $birthDay->diffInYears($now);
-
         DB::beginTransaction();
 
         try {
@@ -136,9 +129,11 @@ class CitizenController extends Controller
         $familyStatuses = MasterFamilyStatus::select('id', 'name')->orderBy('name', 'asc')->get();
         $residenceStatuses = MasterResidenceStatus::select('id', 'name')->orderBy('name', 'asc')->get();
         $socialStatuses = MasterSocialStatus::select('id', 'name')->orderBy('name', 'asc')->get();
+
         $now = Carbon::now();
         $birthDay = Carbon::parse($citizen->birthday);
         $age = $birthDay->diffInYears($now);
+
         return view('citizen.edit', compact('citizen', 'religions', 'jobs', 'salaries', 'educations', 'familyStatuses', 'residenceStatuses', 'socialStatuses', 'age'));
     }
 
@@ -182,27 +177,11 @@ class CitizenController extends Controller
 
     public function import(Request $request)
     {
-        // dd($request);
         $request->validate([
             'file' => ['required', 'file'],
         ]);
 
-        $citizens = Citizen::select('id')->get()->count();
-
         DB::beginTransaction();
-
-        // Excel::import(new CitizenImport, request()->file('file'));
-
-        // $after = Citizen::select('id')->get()->count();
-        // DB::commit();
-        // if($after > $citizens) {
-
-        //     return redirect()->route('citizenTable')->with('success', 'Berhasil di Import');
-
-        // } else {
-        //     DB::rollBack();
-        //     return back()->with('failed', 'Mohon Untuk Cek Data Excel Kembali');
-        // }
 
         try {
 
@@ -211,7 +190,7 @@ class CitizenController extends Controller
             return redirect()->route('citizenTable')->with('success', 'Berhasil di Import');
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->with('failed', $e);
+            return back()->with('failed', $e->getMessage());
         }
     }
 }
