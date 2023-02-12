@@ -162,7 +162,7 @@
                                 <select name="salary" id="salary" class="form-select" required>
                                     <option value=""></option>
                                     @foreach ( $salaries as $salary )
-                                        <option value="{{ $salary->id }}">Rp.{{ $salary->mulai }} - Rp.{{ $salary->sampai }}</option>
+                                        <option value="{{ $salary->id }}">Rp.{{ number_format($salary->mulai) }} - Rp.{{ number_format($salary->sampai) }}</option>
                                     @endforeach
                                 </select>
                             </div>

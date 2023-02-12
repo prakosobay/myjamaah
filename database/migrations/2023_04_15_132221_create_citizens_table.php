@@ -33,7 +33,7 @@ return new class extends Migration
             $table->string('gender');
             $table->string('street');
             $table->tinyInteger('house_number');
-            $table->string('phone', 15)->unique();
+            $table->string('phone', 20)->unique();
             $table->string('marriage_status');
             $table->boolean('is_death')->nullable();
             $table->date('death_date')->nullable();
