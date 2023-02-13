@@ -29,7 +29,7 @@ class CitizenImport implements ToCollection, WithHeadingRow
                 // die;
             }
 
-            $salary = MasterSalary::where('mulai', $row['penghasilan'])->select('id')->first();
+            $salary = MasterSalary::where('mulai', $row['penghasilan_mulai'])->select('id')->first();
             if(!$salary && !isset($salary) && empty($salary)){
                 throw new Exception('Penghasilan Belum Terdaftar!');
                 // dd("b");

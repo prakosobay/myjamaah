@@ -16,6 +16,10 @@
             <button type="button" class="btn btn-success mx-2" data-bs-toggle="modal" data-bs-target="#importModal">
                 Import Excel
             </button>
+
+            <button type="button" class="btn btn-secondary mx-2" data-bs-toggle="modal" data-bs-target="#exportModal">
+                Export Excel
+            </button>
         </div>
 
         @if (session('success'))
@@ -95,6 +99,30 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Import Excel</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="file" class="form-label">Pilih File Excel</label>
+                        <input type="file" class="form-control" id="file" name="file" required>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-danger mx-1 my-1" type="submit">Simpan</button>
+                        <button class="btn btn-secondary mx-1 my-1" data-dismiss="modal" type="button">Tidak</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal Export-->
+<div class="modal fade" id="exportModal" tabindex="-1" role="dialog" aria-labelledby="exportModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <form method="post" action="{{ route('citizenExport')}}" enctype="multipart/form-data">
+            @csrf
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exportModalLabel">Export Excel</h5>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">

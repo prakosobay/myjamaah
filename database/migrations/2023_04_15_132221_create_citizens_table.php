@@ -32,8 +32,8 @@ return new class extends Migration
             $table->date('birthday');
             $table->string('gender');
             $table->string('street');
-            $table->tinyInteger('house_number');
-            $table->string('phone', 20)->unique();
+            $table->smallInteger('house_number');
+            $table->string('phone');
             $table->string('marriage_status');
             $table->boolean('is_death')->nullable();
             $table->date('death_date')->nullable();

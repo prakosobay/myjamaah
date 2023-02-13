@@ -193,4 +193,9 @@ class CitizenController extends Controller
             return back()->with('failed', $e->getMessage());
         }
     }
+
+    public function export(Request $request)
+    {
+
+    }
 }
