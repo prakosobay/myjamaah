@@ -1,7 +1,6 @@
 <?php
 
-use App\Http\Controllers\{AuthController, CitizenController, DashboardController, EducationController, FamilyStatusController, JobController, KawasanController, ReligionController, ResidenceStatusController, RtRwController, SalariesController, SalaryController, SocialStatusController};
-use App\Models\MasterSocialStatus;
+use App\Http\Controllers\{AuthController, CitizenController, DashboardController, EducationController, FamilyStatusController, JobController, KawasanController, ReligionController, ResidenceStatusController, RtRwController, SalaryController, SaldoKasController, SocialStatusController};
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -91,6 +90,13 @@ Route::middleware(['auth'])->group(function(){
         Route::post('citizen/delete/{id}', 'delete')->name('citizenDelete');
         Route::post('citizen/import', 'import')->name('citizenImport');
         Route::post('citizen/export', 'export')->name('citizenExport');
+    });
+
+    Route::controller(SaldoKasController::class)->group(function () {
+        Route::post('saldo-kas-masuk/store', 'storeMasuk')->name('kasMasukStore');
+        Route::post('saldo-kas-keluar/store', 'storeKeluar')->name('kasKeluarStore');
+        Route::get('saldo-kas-keluar', 'kasKeluar')->name('kasKeluarView');
+        Route::get('saldo-kas-masuk', 'kasMasuk')->name('kasMasukView');
     });
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
