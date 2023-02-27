@@ -24,11 +24,11 @@
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label for="mulai" class="form-label"><b>Mulai :</b></label>
-                                    <input type="text" name="mulai" class="form-control" placeholder="1,000,000.00" required autofocus>
+                                    <input type="text" name="mulai" class="form-control" placeholder="Rp 1.000.000" required autofocus>
                                 </div>
                                 <div class="form-group">
                                     <label for="sampai" class="form-label"><b>Sampai :</b></label>
-                                    <input type="text" name="sampai" class="form-control" placeholder="1,000,000.00" required>
+                                    <input type="text" name="sampai" class="form-control" placeholder="Rp 1.000.000">
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -88,7 +88,7 @@
                         </div>
                         <tr>
                             <td>{{ $loop->iteration  }}</td>
-                            <td>Rp. {{ number_format($salary->mulai) }} - Rp. {{ number_format($salary->sampai) }}</td>
+                            <td>{{ $salary->range }}</td>
                             <td>{{ $salary->updatedBy->name }}</td>
                             <td>{{ $salary->updated_at }}</td>
                             <td>

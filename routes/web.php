@@ -93,10 +93,12 @@ Route::middleware(['auth'])->group(function(){
     });
 
     Route::controller(SaldoKasController::class)->group(function () {
-        Route::post('saldo-kas-masuk/store', 'storeMasuk')->name('kasMasukStore');
+        Route::post('saldo-kas/store', 'storeTransaction')->name('storeTransaction');
         Route::post('saldo-kas-keluar/store', 'storeKeluar')->name('kasKeluarStore');
         Route::get('saldo-kas-keluar', 'kasKeluar')->name('kasKeluarView');
         Route::get('saldo-kas-masuk', 'kasMasuk')->name('kasMasukView');
+
+        Route::get('saldo-kas', 'addTransaction')->name('addTransaction');
     });
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

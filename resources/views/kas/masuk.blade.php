@@ -36,6 +36,7 @@
                             <th>Catatan</th>
                             <th>Pencatat</th>
                             <th>Tanggal</th>
+                            <th>Total Kas Masuk</th>
                         </tr>
                     </thead>
                     <tbody class="isi-table text-center">
@@ -46,6 +47,7 @@
                                 <td>{{ $k->note }}</td>
                                 <td>{{ $k->createdBy->name }}</td>
                                 <td>{{ $k->created_at }}</td>
+                                <td></td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -58,7 +60,7 @@
 <!-- Modal Store-->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form method="post" action="{{ route('kasMasukStore')}}" enctype="multipart/form-data">
+        <form method="post" action="" enctype="multipart/form-data">
             @csrf
             <div class="modal-content">
                 <div class="modal-header">

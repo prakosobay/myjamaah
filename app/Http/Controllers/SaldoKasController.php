@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreTransactionRequest;
 use Illuminate\Support\Facades\{DB};
-use App\Models\{SaldoKas};
+use App\Models\{Transaction};
 use Illuminate\Http\Request;
 
 class SaldoKasController extends Controller
@@ -15,70 +16,38 @@ class SaldoKasController extends Controller
         return $auth;
     }
 
-    public function storeKeluar(Request $request)
+    public function addTransaction()
     {
-        // dd($request->all());
-        $request->validate([
-            'duit' => ['required', 'numeric'],
-            'note' => ['required', 'string', 'max:255'],
-        ]);
+        return view('kas.tambah');
+    }
+
+    public function storeTransaction(StoreTransactionRequest $request)
+    {
+        $data = $request->all();
+        dd($data);
 
         DB::beginTransaction();
 
         try {
 
-            $create = SaldoKas::create([
-                'duit' => $request->duit,
-                'note' => $request->note,
-                'is_income' => false,
-                'updated_by' => $this->getUser(),
-                'created_by' => $this->getUser(),
-            ]);
-            // dd($create);
+            foreach($data['type'] as $p => $q) {
+
+                if(isset($data['type'][$p])) {
+
+                    Transaction::create([
+                        'date' => $request->date,
+                        'type' => $data['type'][$p],
+                        'name' => $data['name'][$p],
+                        'val' => $data['val'][$p],
+                    ]);
+                }
+            }
+
             DB::commit();
-            return redirect()->route('kasKeluarView')->with('success', 'Data Tersimpan');
+            return back()->with('success', 'Berhasil di Tersimpan');
         } catch (\Exception $e) {
             DB::rollBack();
             throw $e;
         }
-    }
-
-    public function storeMasuk(Request $request)
-    {
-        $request->validate([
-            'duit' => ['required', 'numeric'],
-            'note' => ['required', 'string', 'max:255'],
-        ]);
-
-        DB::beginTransaction();
-
-        try {
-
-            $create = SaldoKas::create([
-                'duit' => $request->duit,
-                'note' => $request->note,
-                'is_income' => true,
-                'updated_by' => $this->getUser(),
-                'created_by' => $this->getUser(),
-            ]);
-            // dd($create);
-            DB::commit();
-            return redirect()->route('kasMasukView')->with('success', 'Data Tersimpan');
-        } catch (\Exception $e) {
-            DB::rollBack();
-            throw $e;
-        }
-    }
-
-    public function kasMasuk()
-    {
-        $masuk = SaldoKas::with(['updatedBy:id,name', 'createdBy:id,name'])->where('is_income', 1)->get();
-        return view('kas.masuk', compact('masuk'));
-    }
-
-    public function kasKeluar()
-    {
-        $keluar = SaldoKas::with(['updatedBy:id,name', 'createdBy:id,name'])->where('is_income', 0)->get();
-        return view('kas.keluar', compact('keluar'));
     }
 }

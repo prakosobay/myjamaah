@@ -58,7 +58,7 @@
 <!-- Modal Store-->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form method="post" action="{{ route('kasKeluarStore')}}" enctype="multipart/form-data">
+        <form method="post" action="" enctype="multipart/form-data">
             @csrf
             <div class="modal-content">
                 <div class="modal-header">

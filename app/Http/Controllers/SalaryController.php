@@ -10,7 +10,7 @@ class SalaryController extends Controller
 {
     public function table()
     {
-        $salaries = MasterSalary::with(['updatedBy:id,name', 'createdBy:id,name'])->orderBy('mulai', 'asc')->get();
+        $salaries = MasterSalary::with(['updatedBy:id,name', 'createdBy:id,name'])->orderBy('range', 'asc')->get();
         return view('master.salary', compact('salaries'));
     }
 
@@ -18,16 +18,15 @@ class SalaryController extends Controller
     {
         $request->validate([
             'mulai' => ['required'],
-            'sampai' => ['required'],
+            'sampai' => ['nullable'],
         ]);
 
         DB::beginTransaction();
 
         try {
 
-            MasterSalary::create([
-                'mulai' => $request->mulai,
-                'sampai' => $request->sampai,
+            $e = MasterSalary::create([
+                'range' => $request->mulai . ' ' . '-' . ' ' . $request->sampai,
                 'created_by' => auth()->user()->id,
                 'updated_by' => auth()->user()->id,
             ]);

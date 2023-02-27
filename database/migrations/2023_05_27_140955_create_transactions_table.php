@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('saldo_kas', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->unsignedBigInteger('duit');
-            $table->string('note');
-            $table->boolean('is_income')->nullable();
-            $table->foreignUuid('updated_by')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->date('date');
+            $table->string('type');
+            $table->string('name');
+            $table->unsignedBigInteger('val');
             $table->foreignUuid('created_by')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('saldo_kas');
+        Schema::dropIfExists('transactions');
     }
 };
