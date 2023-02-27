@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTransactionRequest;
 use Illuminate\Support\Facades\{DB};
 use App\Models\{Transaction};
+use Yajra\Datatables\Datatables;
+use Illuminate\Support\{Str, Carbon};
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 
 class SaldoKasController extends Controller
@@ -53,7 +56,6 @@ class SaldoKasController extends Controller
 
     public function tableTransaction()
     {
-        // $getAll = Transaction::with('createdBy:id,name')->get();
         return view('kas.table');
     }
 
@@ -62,7 +64,22 @@ class SaldoKasController extends Controller
         // dd($request->all());
 
         $getTransactions = Transaction::with('createdBy:id,name')->where('type', $request->filter_type)->whereBetween('date_trans', [$request->date_from, $request->date_to]);
-        dd($getTransactions);
+        // dd($getTransactions);
+        return $getTransactions;
 
+    }
+
+    public function yajraTransaction()
+    {
+        $query = Transaction::with('createdBy:id,name');
+        return Datatables::of($query)
+        ->addColumn('DT_RowIndex', function($row) {
+            static $index = 1;
+            return $index++;
+        })
+        ->editColumn('date_trans', function ($getTransactions) {
+            return $getTransactions->date_trans ? with(new Carbon($getTransactions->date_trans))->format('d/m/Y') : '';
+        })
+        ->toJson();
     }
 }

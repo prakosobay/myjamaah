@@ -107,14 +107,15 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSaldoKas"
                     aria-expanded="true" aria-controls="collapseSaldoKas">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>Saldo Kas</span>
+                    <span>Transaksi</span>
                 </a>
                 <div id="collapseSaldoKas" class="collapse" aria-labelledby="headingSaldoKas"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Saldo Kas:</h6>
+                        <h6 class="collapse-header">Transaksi:</h6>
                         <a class="collapse-item" href="{{ route('addTransaction')}}">Tambah Data Transaksi</a>
                         <a class="collapse-item" href="{{ route('tableTransaction')}}">List Data Transaksi</a>
+                        <a class="collapse-item" href="{{ route('tableLaporanPetugas')}}">List Data Petugas</a>
                     </div>
                 </div>
             </li>

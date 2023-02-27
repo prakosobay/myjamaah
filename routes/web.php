@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\{AuthController, CitizenController, DashboardController, EducationController, FamilyStatusController, JobController, KawasanController, ReligionController, ResidenceStatusController, RtRwController, SalaryController, SaldoKasController, SocialStatusController};
+use App\Http\Controllers\{AuthController, CitizenController, DashboardController, EducationController, FamilyStatusController, JobController, KawasanController, LaporanPetugasController, ReligionController, ResidenceStatusController, RtRwController, SalaryController, SaldoKasController, SocialStatusController};
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -98,6 +98,13 @@ Route::middleware(['auth'])->group(function(){
 
         Route::get('saldo-kas/add', 'addTransaction')->name('addTransaction');
         Route::get('saldo-kas/table', 'tableTransaction')->name('tableTransaction');
+        Route::get('saldo-kas/yajra', 'yajraTransaction')->name('yajraTransaction');
+    });
+
+    Route::controller(LaporanPetugasController::class)->group(function () {
+        Route::get('laporan-petugas/table', 'table')->name('tableLaporanPetugas');
+        Route::get('laporan-petugas/yajra', 'yajra')->name('yajraLaporanPetugas');
+        Route::post('laporan-petugas/store', 'store')->name('storeLaporanPetugas');
     });
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
