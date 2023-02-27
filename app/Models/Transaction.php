@@ -11,9 +11,9 @@ class Transaction extends Model
     use HasFactory, SoftDeletes, Uuid;
 
     protected $table = 'transactions';
-    protected $fillabel = [
+    protected $fillable = [
         'name',
-        'date',
+        'date_trans',
         'type',
         'val',
         'created_by',

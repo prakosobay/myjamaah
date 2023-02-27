@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->date('date');
+            $table->date('date_trans');
             $table->string('type');
             $table->string('name');
             $table->unsignedBigInteger('val');

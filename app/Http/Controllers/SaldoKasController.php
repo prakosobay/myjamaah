@@ -24,8 +24,7 @@ class SaldoKasController extends Controller
     public function storeTransaction(StoreTransactionRequest $request)
     {
         $data = $request->all();
-        dd($data);
-
+        // dd($data);
         DB::beginTransaction();
 
         try {
@@ -35,10 +34,11 @@ class SaldoKasController extends Controller
                 if(isset($data['type'][$p])) {
 
                     Transaction::create([
-                        'date' => $request->date,
+                        'date_trans' => $request->date,
                         'type' => $data['type'][$p],
                         'name' => $data['name'][$p],
                         'val' => $data['val'][$p],
+                        'created_by' => $this->getUser(),
                     ]);
                 }
             }
@@ -49,5 +49,20 @@ class SaldoKasController extends Controller
             DB::rollBack();
             throw $e;
         }
+    }
+
+    public function tableTransaction()
+    {
+        // $getAll = Transaction::with('createdBy:id,name')->get();
+        return view('kas.table');
+    }
+
+    public function storeFilter(Request $request)
+    {
+        // dd($request->all());
+
+        $getTransactions = Transaction::with('createdBy:id,name')->where('type', $request->filter_type)->whereBetween('date_trans', [$request->date_from, $request->date_to]);
+        dd($getTransactions);
+
     }
 }

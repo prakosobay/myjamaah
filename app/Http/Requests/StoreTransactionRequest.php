@@ -28,7 +28,7 @@ class StoreTransactionRequest extends FormRequest
             'type' => ['required', 'array', 'min:1'],
             'type.*' => ['required', 'string'],
             'name' => ['required', 'array', 'min:1'],
-            'name.*' => ['required', 'string', 'max:2'],
+            'name.*' => ['required', 'string', 'max:255'],
             'val' => ['required', 'array', 'min:1'],
             'val.*' => ['required', 'numeric'],
         ];

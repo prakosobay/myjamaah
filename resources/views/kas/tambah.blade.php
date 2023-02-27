@@ -37,14 +37,14 @@
                                 @endforeach
                             </ul>
                         </div>
-                    @endif
-                </div> --}}
+                    @endif --}}
+                </div>
 
                 <div class="card-body" id="input-container">
                     <div class="row">
                         <div class="col-md-2">
                             <label for="date" class="form-label"><b>Tanggal Transaksi :</b></label>
-                            <input type="date" name="date" value="" class="form-control" id="date" required autofocus>
+                            <input type="date" name="date" value="{{ old('date')}}" class="form-control" id="date" required autofocus>
                         </div>
                     </div>
 
@@ -63,17 +63,14 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="name" class="form-label"><b>Nama Transaksi :</b></label>
-                                <input type="text" name="name[]" value="" class="form-control @error('name') is-invalid @enderror" id="name" required>
-                                @error('name')
-                                    <div class="invalid-feedback">{{ $message }}</div></br>
-                                @enderror
+                                <input type="text" name="name[]" class="form-control" value="{{ old('name[]')}}" id="name" required>
                             </div>
                         </div>
 
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label for="val" class="form-label"><b>Nominal :</b></label>
-                                <input type="number" name="val[]" value="" class="form-control" id="val" placeholder="0" required>
+                                <input type="number" name="val[]" value="{{ old('val[]')}}" class="form-control" id="val" placeholder="0" required>
                             </div>
                         </div>
                     </div>
@@ -98,7 +95,7 @@
 
             $('#add-input-btn').on('click', function() {
 
-                var newInput = '<div class="row my-3"><div class="col-md-2">    <div class="form-group"><label for="type" class="form-label"><b>Tipe Transaksi :</b></label><select name="type[]" id="type" class="form-select" required>    <option selected></option>    <option value="Pemasukan">Pemasukan</option>    <option value="Pengeluaran">Pengeluaran</option></select>    </div></div><div class="col-md-6"><div class="form-group"><label for="name" class="form-label"><b>Nama Transaksi :</b></label><input type="text" name="name[]" value="" class="form-control" id="name" required></div></div><div class="col-md-3">    <div class="form-group"><label for="val" class="form-label"><b>Nominal :</b></label><input type="number" name="val[]" value="" class="form-control" id="val" placeholder="0" required>    </div></div><div class="col-md-1"><div class="form-group"> </div></div>';
+                var newInput = '<div class="row my-3"><div class="col-md-2">    <div class="form-group">        <label for="type" class="form-label"><b>Tipe Transaksi :</b></label>        <select name="type[]" id="type" class="form-select" required><option selected></option><option value="Pemasukan">Pemasukan</option><option value="Pengeluaran">Pengeluaran</option>        </select>    </div></div><div class="col-md-6">    <div class="form-group">        <label for="name" class="form-label"><b>Nama Transaksi :</b></label>        <input type="text" name="name[]" class="form-control" value="{{ old('name[]')}}" id="name" required>    </div></div><div class="col-md-3">    <div class="form-group">        <label for="val" class="form-label"><b>Nominal :</b></label>        <input type="number" name="val[]" value="{{ old('val[]')}}" class="form-control" id="val" placeholder="0" required>    </div></div></div>';
 
             $('#input-container').append(newInput);
             });

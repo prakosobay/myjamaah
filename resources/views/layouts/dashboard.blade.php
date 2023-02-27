@@ -114,6 +114,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Saldo Kas:</h6>
                         <a class="collapse-item" href="{{ route('addTransaction')}}">Tambah Data Transaksi</a>
+                        <a class="collapse-item" href="{{ route('tableTransaction')}}">List Data Transaksi</a>
                     </div>
                 </div>
             </li>
