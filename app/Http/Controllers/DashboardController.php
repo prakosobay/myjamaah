@@ -12,7 +12,7 @@ class DashboardController extends Controller
     {
         $jamaah = Citizen::where('m_religion_id', $this->getIslam())->count();
         // $saldo = Transaction::
-        return view('master.home', compact('jamaah'));
+        return view('home', compact('jamaah'));
     }
 
     public function getIslam()

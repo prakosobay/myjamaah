@@ -100,6 +100,7 @@ Route::middleware(['auth'])->group(function(){
         Route::get('saldo-kas/table', 'tableTransaction')->name('tableTransaction');
         Route::get('saldo-kas/yajra', 'yajraTransaction')->name('yajraTransaction');
         Route::get('saldo-kas/total', 'totalSaldo')->name('totalSaldo');
+        Route::get('saldo-kas/excel', 'exportExcel')->name('exportExcelSaldo');
     });
 
     Route::controller(LaporanPetugasController::class)->group(function () {

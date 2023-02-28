@@ -28,8 +28,9 @@
                     </select>
                 </div>
                 <div class="col-md-3 mt-4 pt-2">
-                    <button type="button" name="filter" id="filter" class="btn btn-primary mr-2">Filter</button>
-                    <button type="button" name="refresh" id="refresh" class="btn btn-warning">Refresh</button>
+                    <button type="button" name="filter" id="filter" class="btn btn-sm btn-primary mr-1">Filter</button>
+                    <button type="button" name="refresh" id="refresh" class="btn btn-sm btn-warning mr-1">Refresh</button>
+                    <button type="button" name="submit" id="export" class="btn btn-sm btn-success">Export</button>
                 </div>
             </div>
         </div>
@@ -44,7 +45,7 @@
                             <th>Tanggal</th>
                             <th>Tipe</th>
                             <th>Nama Transaksi</th>
-                            <th>Nominal</th>
+                            <th class="currency">Nominal (Rp)</th>
                         </tr>
                     </thead>
                     <tbody class="isi-table text-center">
@@ -54,7 +55,7 @@
         </div>
     </div>
 
-    <div class="card shadow mb-4 col-md-4">
+    <div class="card shadow mb-4 col-md-6">
         <div class="card-body ">
             <div class="table-responsive">
                 <table class="table table-hover table-bordered" id="transaction" width="100%" cellspacing="0">
@@ -67,15 +68,15 @@
                     <tbody class="isi-table text-center">
                         <tr>
                             <td >Pemasukan</td>
-                            <td id="pemasukan"></td>
+                            <td class="currency" id="pemasukan"></td>
                         </tr>
                         <tr>
                             <td>Pengeluaran</td>
-                            <td id="pengeluaran"></td>
+                            <td class="currency" id="pengeluaran"></td>
                         </tr>
                         <tr>
                             <td>Saldo Akhir</td>
-                            <td id="saldo_akhir"></td>
+                            <td class="currency" id="saldo_akhir"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -87,6 +88,8 @@
 
 @push('scripts')
 
+    {{-- mask Money --}}
+    <script src="{{ asset('vendor/jquery/jquery.maskMoney.min.js') }}"></script>
     <script>
         $(document).ready( function () {
 
@@ -118,21 +121,19 @@
 
                             for (let i = 0; i < data.length; i++) {
                                if(data[i].type_transaction === 'Pemasukan'){
-
-                                    var income = data[i].total;
-                                    $('#pemasukan').html(income);
+                                   var income = data[i].total;
+                                   console.log(parseInt(income).toLocaleString())
+                                    $('#pemasukan').html(` Rp. ${parseInt(income).toLocaleString()}`);
                                }
 
                                else if(data[i].type_transaction === 'Pengeluaran'){
 
                                     var expense = data[i].total;
-                                    $('#pengeluaran').html(expense);
+                                    $('#pengeluaran').html(` Rp. ${parseInt(expense).toLocaleString()}`);
                                }
 
                                var total = income - expense;
-                                $('#pemasukan').html(income);
-                                $('#pengeluaran').html(expense);
-                                $('#saldo_akhir').html(total);
+                                $('#saldo_akhir').html(` Rp. ${parseInt(total).toLocaleString()}`);
                             }
                         }
 
@@ -144,7 +145,9 @@
                 });
             }
 
-            $('#filter').click(function(){
+
+
+            $('#filter').click(function() {
                 var from_date = $('#from_date').val();
                 var to_date = $('#to_date').val();
                 var type = $('#type').val();
@@ -158,7 +161,41 @@
                 }
             });
 
-            $('#refresh').click(function(){
+            $('#export').click(function() {
+                var from_date = $('#from_date').val();
+                var to_date = $('#to_date').val();
+                var type = $('#type').val();
+
+                if(from_date != '' &&  to_date != ''){
+                    exportExcel(from_date, to_date, type)
+
+                } else{
+                    alert('Kedua Tanggal Harus Terisi !');
+                }
+            });
+
+            function exportExcel(from_date = '', to_date = '', type = ''){
+                $.ajax({
+                    type: 'GET', //THIS NEEDS TO BE GET
+                    url: '{{ route('exportExcelSaldo')}}',
+                    data : {from_date:from_date, to_date:to_date, type:type},
+                    xhrFields:{
+                        responseType: 'blob'
+                    },
+                    success: function (data) {
+                        let link = document.createElement('a')
+                        link.href = window.URL.createObjectURL(data)
+                        link.download = 'Report.xlsx'
+                        link.click()
+                        console.log(data)
+                    },
+                    error: function() {
+                        console.log(data);
+                    }
+                });
+            }
+
+            $('#refresh').click(function() {
                 $('#from_date').val('');
                 $('#to_date').val('');
                 $('#type').val('');
@@ -168,6 +205,10 @@
                 $('#transaction').DataTable().destroy();
                 load_data();
                 load_data_total();
+            });
+
+            $(function() {
+                $('.currency').maskMoney({ prefix: 'Rp ', thousands: '.' });
             });
         });
     </script>

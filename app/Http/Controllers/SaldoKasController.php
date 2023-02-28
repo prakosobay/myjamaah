@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\SaldoExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreTransactionRequest;
 use Illuminate\Support\Facades\{DB};
@@ -83,6 +84,9 @@ class SaldoKasController extends Controller
                 static $index = 1;
                 return $index++;
             })
+            ->editColumn('val', function($getTransactions) {
+                return $getTransactions->val ? number_format($getTransactions->val) : '';
+            })
             ->editColumn('date_trans', function ($getTransactions) {
                 return $getTransactions->date_trans ? with(new Carbon($getTransactions->date_trans))->format('d/m/Y') : '';
             })
@@ -94,11 +98,9 @@ class SaldoKasController extends Controller
     {
         if(request()->ajax()) {
 
-            // $query = Transaction::with('createdBy:id,name');
             $query = Transaction::groupBy('type')
                 ->selectRaw('sum(val) as total, type as type_transaction');
 
-                // ->toSql();
             if(!empty($request->from_date) && (!empty($request->to_date))) {
 
                 if($request->type == 'Pengeluaran') {
@@ -115,9 +117,33 @@ class SaldoKasController extends Controller
                 }
             }
 
-            // $query->get();
             return  response()->json($query->get());
+        }
+    }
 
+    public function exportExcel(Request $request)
+    {
+        if(request()->ajax()) {
+
+            $query = Transaction::select('transactions.date_trans', 'transactions.type', 'transactions.name', 'transactions.val', 'users.name as createdby')->join('users', 'transactions.created_by', '=', 'users.id');
+
+            if(!empty($request->from_date) && (!empty($request->to_date))) {
+
+                if($request->type == 'Pengeluaran') {
+
+                    $query = $query->where('type', 'Pengeluaran')->whereBetween('date_trans', [$request->from_date, $request->to_date])->get();
+                } else if($request->type == 'Pemasukan') {
+
+                    $query = $query->where('type', 'Pemasukan')->whereBetween('date_trans', [$request->from_date, $request->to_date])->get();
+                } else {
+
+                    $query = $query->whereBetween('date_trans', [$request->from_date, $request->to_date])->get();
+                }
+            }
+
+            // dd($query);
+
+            return Excel::download(new SaldoExport($query), 'List Data Transaksi.xlsx');
         }
     }
 }
