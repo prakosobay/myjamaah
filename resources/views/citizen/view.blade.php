@@ -102,7 +102,7 @@
                     <div class="col-4">
                         <div class="form-group my-2">
                             <label for="salary" class="form-label"><b>Penghasilan Per Bulan :</b></label>
-                            <input type="text" id="salary" value="Rp. {{ number_format($citizen->mSalaryId->mulai) }} - Rp. {{ number_format($citizen->mSalaryId->sampai) }}" class="form-control" readonly>
+                            <input type="text" id="salary" value="{{ $citizen->mSalaryId->range }}" class="form-control" readonly>
                         </div>
                         <div class="form-group my-2">
                             <label for="marriageStatus" class="form-label"><b>Status Perkawinan :</b></label>

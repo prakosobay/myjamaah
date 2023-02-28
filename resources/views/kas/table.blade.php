@@ -10,41 +10,28 @@
 
         {{-- Filter --}}
         <div class="card-header py-3">
-            <form action="{{ route('storeFilter')}}" method="POST" class="validate-form">
-                @csrf
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="filter_type" class="form-label"><b>Tipe Transaksi :</b></label>
-                            <select name="filter_type" id="filter_type" class="form-select" required>
-                                <option selected value="Semua">Semua</option>
-                                <option value="Pemasukan">Pemasukan</option>
-                                <option value="Pengeluaran">Pengeluaran</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="date_from" class="form-label"><b>Tanggal Mulai :</b></label>
-                            <input type="date" id="date_from" value="{{ old('date_from')}}" name="date_from" class="form-control" required>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label for="date_to" class="form-label"><b>Tanggal Sampai :</b></label>
-                            <input type="date" id="date_to" value="{{ old('date_to')}}" name="date_to" class="form-control" required>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 mt-4">
-                        <div class="form-group">
-                            <button class="btn btn-success" type="submit">Filter</button>
-                        </div>
-                    </div>
+            <div class="row input-daterange">
+                <div class="col-md-3">
+                    <label for="from_date" class="form-label"><b>Tanggal Mulai :</b></label>
+                    <input type="date" name="from_date" id="from_date" class="form-control" placeholder="From Date" required />
                 </div>
-            </form>
+                <div class="col-md-3">
+                    <label for="to_date" class="form-label"><b>Tanggal Sampai :</b></label>
+                    <input type="date" name="to_date" id="to_date" class="form-control" placeholder="To Date" required />
+                </div>
+                <div class="col-md-3">
+                    <label for="type" class="form-label"><b>Tipe Transaksi :</b></label>
+                    <select name="type" id="type" class="form-select" required>
+                        <option value="Semua">Semua</option>
+                        <option value="Pemasukan">Pemasukan</option>
+                        <option value="Pengeluaran">Pengeluaran</option>
+                    </select>
+                </div>
+                <div class="col-md-3 mt-4 pt-2">
+                    <button type="button" name="filter" id="filter" class="btn btn-primary mr-2">Filter</button>
+                    <button type="button" name="refresh" id="refresh" class="btn btn-warning">Refresh</button>
+                </div>
+            </div>
         </div>
 
         {{-- Table --}}
@@ -66,12 +53,6 @@
             </div>
         </div>
 
-        {{-- Total Saldo --}}
-        <div class="card shadow my-2">
-            <div class="card">
-                Total Saldo
-            </div>
-        </div>
     </div>
 </div>
 
@@ -79,17 +60,44 @@
 
     <script>
         $(document).ready( function () {
-            $('#transaction').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: '{{ route('yajraTransaction')}}',
-                columns: [
-                    { data: 'DT_RowIndex', name: 'DT_RowIndex' },
-                    { data: 'date_trans', name: 'date_trans' },
-                    { data: 'type', name: 'type' },
-                    { data: 'name', name: 'name' },
-                    { data: 'val', name: 'val' },
-                ]
+
+            function load_data(from_date = '', to_date = '', type = ''){
+                $('#transaction').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: {
+                        url:'{{ route('yajraTransaction')}}',
+                        data:{from_date:from_date, to_date:to_date, type:type}
+                    },
+                    columns: [
+                        { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+                        { data: 'date_trans', name: 'date_trans' },
+                        { data: 'type', name: 'type' },
+                        { data: 'name', name: 'name' },
+                        { data: 'val', name: 'val' }
+                    ]
+                });
+            }
+
+            $('#filter').click(function(){
+                var from_date = $('#from_date').val();
+                var to_date = $('#to_date').val();
+                var type = $('#type').val();
+                // console.log(type);
+                if(from_date != '' &&  to_date != ''){
+                    $('#transaction').DataTable().destroy();
+                    load_data(from_date, to_date, type);
+                } else{
+                    alert('Kedua Tanggal Harus Terisi !');
+                }
+            });
+
+            $('#refresh').click(function(){
+                $('#from_date').val('');
+                $('#to_date').val('');
+                $('#type').val('');
+                $('#transaction').DataTable().destroy();
+                load_data();
             });
         });
     </script>

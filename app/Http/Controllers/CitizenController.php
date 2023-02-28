@@ -22,7 +22,7 @@ class CitizenController extends Controller
     {
         $religions = MasterReligion::select('id', 'name')->orderBy('name', 'asc')->get();
         $jobs = MasterJob::select('id', 'name')->orderBy('name', 'asc')->get();
-        $salaries = MasterSalary::select('id', 'mulai', 'sampai')->orderBy('mulai', 'asc')->get();
+        $salaries = MasterSalary::select('id', 'range')->orderBy('range', 'asc')->get();
         $educations = MasterEducation::select('id', 'name')->orderBy('name', 'asc')->get();
         $familyStatuses = MasterFamilyStatus::select('id', 'name')->orderBy('name', 'asc')->get();
         $residenceStatuses = MasterResidenceStatus::select('id', 'name')->orderBy('name', 'asc')->get();
@@ -115,7 +115,7 @@ class CitizenController extends Controller
             'createdBy:id,name',
             'updatedBy:id,name',
             'mJobId:id,name',
-            'mSalaryId:id,mulai,sampai',
+            'mSalaryId:id,range',
             'mReligionId:id,name',
             'mFamilyStatusId:id,name',
             'mEducationId:id,name',
@@ -124,7 +124,7 @@ class CitizenController extends Controller
         ])->where('id', $id)->first();
         $religions = MasterReligion::select('id', 'name')->orderBy('name', 'asc')->get();
         $jobs = MasterJob::select('id', 'name')->orderBy('name', 'asc')->get();
-        $salaries = MasterSalary::select('id', 'mulai', 'sampai')->orderBy('mulai', 'asc')->get();
+        $salaries = MasterSalary::select('id', 'range')->orderBy('range', 'asc')->get();
         $educations = MasterEducation::select('id', 'name')->orderBy('name', 'asc')->get();
         $familyStatuses = MasterFamilyStatus::select('id', 'name')->orderBy('name', 'asc')->get();
         $residenceStatuses = MasterResidenceStatus::select('id', 'name')->orderBy('name', 'asc')->get();
@@ -143,7 +143,7 @@ class CitizenController extends Controller
             'createdBy:id,name',
             'updatedBy:id,name',
             'mJobId:id,name',
-            'mSalaryId:id,mulai,sampai',
+            'mSalaryId:id,range',
             'mReligionId:id,name',
             'mFamilyStatusId:id,name',
             'mEducationId:id,name',

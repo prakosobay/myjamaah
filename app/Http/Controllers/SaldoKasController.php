@@ -69,17 +69,34 @@ class SaldoKasController extends Controller
 
     }
 
-    public function yajraTransaction()
+    public function yajraTransaction(Request $request)
     {
-        $query = Transaction::with('createdBy:id,name');
-        return Datatables::of($query)
-        ->addColumn('DT_RowIndex', function($row) {
-            static $index = 1;
-            return $index++;
-        })
-        ->editColumn('date_trans', function ($getTransactions) {
-            return $getTransactions->date_trans ? with(new Carbon($getTransactions->date_trans))->format('d/m/Y') : '';
-        })
-        ->toJson();
+        if(request()->ajax()) {
+            $query = Transaction::with('createdBy:id,name');
+
+            if(!empty($request->from_date) && (!empty($request->to_date))) {
+
+                if($request->type == 'Pengeluaran') {
+
+                    $query = $query->where('type', 'Pengeluaran')->whereBetween('date_trans', [$request->from_date, $request->to_date]);
+                } else if($request->type == 'Pemasukan') {
+
+                    $query = $query->where('type', 'Pemasukan')->whereBetween('date_trans', [$request->from_date, $request->to_date]);
+                } else {
+
+                    $query = $query->whereBetween('date_trans', [$request->from_date, $request->to_date]);
+                }
+            }
+
+            return Datatables::of($query)
+            ->addColumn('DT_RowIndex', function($row) {
+                static $index = 1;
+                return $index++;
+            })
+            ->editColumn('date_trans', function ($getTransactions) {
+                return $getTransactions->date_trans ? with(new Carbon($getTransactions->date_trans))->format('d/m/Y') : '';
+            })
+            ->toJson();
+        }
     }
 }

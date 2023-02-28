@@ -222,9 +222,9 @@
                             <div class="form-group my-2">
                                 <label for="salary" class="form-label"><b>Penghasilan Per Bulan :</b></label>
                                 <select name="salary" id="salary" class="form-select @error('salary') is-invalid @enderror" required>
-                                    <option value="{{ $citizen->mSalaryId->id }}">Rp. {{ number_format($citizen->mSalaryId->mulai) }} - Rp. {{ number_format($citizen->mSalaryId->sampai) }}</option>
+                                    <option value="{{ $citizen->mSalaryId->id }}">{{ $citizen->mSalaryId->range }}</option>
                                     @foreach ( $salaries as $salary )
-                                        <option value="{{ $salary->id }}">Rp. {{ number_format($salary->mulai) }} - Rp. {{ number_format($salary->sampai) }}</option>
+                                        <option value="{{ $salary->id }}">{{ $salary->range }}</option>
                                     @endforeach
                                 </select>
                                 @error('salary')
