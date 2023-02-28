@@ -18,7 +18,7 @@
                         <div class="col mr-2">
                             <div class="text-md font-weight-bold text-success text-uppercase mb-1">
                                 Pemasukan</div>
-                            <div class="h4 mb-0 font-weight-bold text-gray-800">Rp. 215,000</div>
+                            <div class="h4 mb-0 font-weight-bold text-gray-800">Rp. {{ number_format($pemasukan)}}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -36,7 +36,7 @@
                         <div class="col mr-2">
                             <div class="text-md font-weight-bold text-danger text-uppercase mb-1">
                                 Pengeluaran</div>
-                            <div class="h4 mb-0 font-weight-bold text-gray-800">Rp. 40,000</div>
+                            <div class="h4 mb-0 font-weight-bold text-gray-800">Rp. {{ number_format($pengeluaran)}}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -45,8 +45,6 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 
     <div class="row">
@@ -81,7 +79,7 @@
                         <div class="col mr-2">
                             <div class="text-md font-weight-bold text-primary text-uppercase mb-1">
                                 Saldo Akhir</div>
-                            <div class="h4 mb-0 font-weight-bold text-gray-800">Rp. 40,000</div>
+                            <div class="h4 mb-0 font-weight-bold text-gray-800">Rp. {{ number_format($total)}}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>

@@ -89,7 +89,7 @@ Route::middleware(['auth'])->group(function(){
         Route::post('citizen/update/{id}', 'update')->name('citizenUpdate');
         Route::post('citizen/delete/{id}', 'delete')->name('citizenDelete');
         Route::post('citizen/import', 'import')->name('citizenImport');
-        Route::post('citizen/export', 'export')->name('citizenExport');
+        Route::get('citizen/export', 'export')->name('citizenExport');
     });
 
     Route::controller(SaldoKasController::class)->group(function () {

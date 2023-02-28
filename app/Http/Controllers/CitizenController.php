@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\CitizenExport;
 use App\Http\Requests\CitizenRequest;
 use App\Imports\CitizenImport;
 use App\Models\{MasterReligion, Citizen, MasterEducation, MasterFamilyStatus, MasterJob, MasterResidenceStatus, MasterSalary, MasterSocialStatus};
@@ -149,7 +150,7 @@ class CitizenController extends Controller
             'mEducationId:id,name',
             'mResidenceStatusId:id,name',
             'mSocialStatusId:id,name',
-        ])->where('id', $id)->first();
+        ])->where('id', $id)->orderBy('name', 'asc')->first();
 
         $now = Carbon::now();
         $birthDay = Carbon::parse($citizen->birthday);
@@ -194,8 +195,49 @@ class CitizenController extends Controller
         }
     }
 
-    public function export(Request $request)
+    public function export()
     {
+        $citizen = Citizen::with([
+            'createdBy' => function ($q) {
+                $q->select('id', 'name');
+            },
+            'updatedBy' => function ($q) {
+                $q->select('id', 'name');
+            },
+            'mJobId' => function ($q) {
+                $q->select('id', 'name');
+            },
+            'mSalaryId' => function ($q) {
+                $q->select('id', 'range');
+            },
+            'mReligionId' => function ($q) {
+                $q->select('id', 'name');
+            },
+            'mFamilyStatusId' => function ($q) {
+                $q->select('id', 'name');
+            },
+            'mEducationId' => function ($q) {
+                $q->select('id', 'name');
+            },
+            'mResidenceStatusId' => function ($q) {
+                $q->select('id', 'name');
+            },
+            'mSocialStatusId' => function ($q) {
+                $q->select('id', 'name');
+            },
+        ])
+        ->where('m_religion_id', $this->getIslam())
+        // ->select(
+        //     'name', 'birthday', 'kk_number', 'nik_number', 'gender', 'street', 'rt', 'rw', 'house_number', 'phone', 'marriage_status', 'm_education_id', 'm_job_id', 'm_salary_id', 'm_religion_id', 'm_family_status_id', 'm_residence_status_id', 'm_social_status_id', 'death_date',
+        // )
+        ->get();
+        // return response()->json(['citizen' => $citizen]);
+        return Excel::download(new CitizenExport($citizen), 'Data Jamaah.xlsx');
+    }
 
+    public function getIslam()
+    {
+        $islam = MasterReligion::where('name', 'Islam')->first();
+        return $islam->id;
     }
 }
