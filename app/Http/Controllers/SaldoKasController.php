@@ -59,16 +59,6 @@ class SaldoKasController extends Controller
         return view('kas.table');
     }
 
-    public function storeFilter(Request $request)
-    {
-        // dd($request->all());
-
-        $getTransactions = Transaction::with('createdBy:id,name')->where('type', $request->filter_type)->whereBetween('date_trans', [$request->date_from, $request->date_to]);
-        // dd($getTransactions);
-        return $getTransactions;
-
-    }
-
     public function yajraTransaction(Request $request)
     {
         if(request()->ajax()) {
@@ -97,6 +87,37 @@ class SaldoKasController extends Controller
                 return $getTransactions->date_trans ? with(new Carbon($getTransactions->date_trans))->format('d/m/Y') : '';
             })
             ->toJson();
+        }
+    }
+
+    public function totalSaldo(Request $request)
+    {
+        if(request()->ajax()) {
+
+            // $query = Transaction::with('createdBy:id,name');
+            $query = Transaction::groupBy('type')
+                ->selectRaw('sum(val) as total, type as type_transaction');
+
+                // ->toSql();
+            if(!empty($request->from_date) && (!empty($request->to_date))) {
+
+                if($request->type == 'Pengeluaran') {
+
+                    $query = $query->where('type', 'Pengeluaran')->whereBetween('date_trans', [$request->from_date, $request->to_date]);
+
+                } else if($request->type == 'Pemasukan') {
+
+                    $query = $query->where('type', 'Pemasukan')->whereBetween('date_trans', [$request->from_date, $request->to_date]);
+
+                } else {
+
+                    $query = $query->whereBetween('date_trans', [$request->from_date, $request->to_date]);
+                }
+            }
+
+            // $query->get();
+            return  response()->json($query->get());
+
         }
     }
 }
