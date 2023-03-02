@@ -28,6 +28,7 @@ class CitizenController extends Controller
         $familyStatuses = MasterFamilyStatus::select('id', 'name')->orderBy('name', 'asc')->get();
         $residenceStatuses = MasterResidenceStatus::select('id', 'name')->orderBy('name', 'asc')->get();
         $socialStatuses = MasterSocialStatus::select('id', 'name')->orderBy('name', 'asc')->get();
+
         return view('citizen.add', compact('religions', 'jobs', 'salaries', 'educations', 'familyStatuses', 'residenceStatuses', 'socialStatuses'));
     }
 
@@ -123,6 +124,7 @@ class CitizenController extends Controller
             'mResidenceStatusId:id,name',
             'mSocialStatusId:id,name',
         ])->where('id', $id)->first();
+
         $religions = MasterReligion::select('id', 'name')->orderBy('name', 'asc')->get();
         $jobs = MasterJob::select('id', 'name')->orderBy('name', 'asc')->get();
         $salaries = MasterSalary::select('id', 'range')->orderBy('range', 'asc')->get();

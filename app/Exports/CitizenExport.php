@@ -4,10 +4,10 @@ namespace App\Exports;
 
 use App\Models\Citizen;
 use Illuminate\Support\{Carbon};
-use Maatwebsite\Excel\Concerns\{FromCollection, FromQuery, WithHeadings, WithMapping, WithStyles};
+use Maatwebsite\Excel\Concerns\{FromCollection, WithHeadings, WithMapping, WithStyles};
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class CitizenExport implements FromCollection, WithHeadings, WithStyles, WithMapping
+class CitizenExport implements FromCollection, WithStyles, WithHeadings, WithMapping
 {
     /**
     * @return \Illuminate\Support\Collection
@@ -24,6 +24,37 @@ class CitizenExport implements FromCollection, WithHeadings, WithStyles, WithMap
     public function collection()
     {
         return $this->citizen;
+        // return $this->citizen->map(function ($c, $index) {
+        //     return [
+        //         'No.' => $index + 1,
+        //         'Nama Lengkap' => $c->name,
+        //         'Tanggal Lahir' => $c->birthday,
+        //         'No. KK' => $c->kk_number,
+        //         'NIK' => $c->nik_number,
+        //         'Jenis Kelamin' => $c->gender,
+        //         'Umur' => function () use ($c){
+        //             $now = Carbon::now();
+        //             $ultah = Carbon::parse($c->birthday);
+        //             $age = $ultah->diffInYears($now);
+
+        //             return $age;
+        //         },
+        //         'Jalan' => $c->street,
+        //         'RT' => $c->rt,
+        //         'RW' => $c->rw,
+        //         'No. Rumah' => $c->house_number,
+        //         'No. Telepon' => $c->phone,
+        //         'Status Pernikahan' => $c->marriage_status,
+        //         'Pendidikan' => $c->mEducationId->name,
+        //         'Pekerjaan' => $c->mJobId->name,
+        //         'Penghasilan' => $c->mSalaryId->range,
+        //         'Agama' => $c->mReligionId->name,
+        //         'Status Keluarga' => $c->mFamilyStatusId->name,
+        //         'Status Tempat Tinggal' => $c->mResidenceStatusId->name,
+        //         'Status Sosial' => $c->mSocialStatusId->name,
+        //         'Tanggal Meninggal' => $c->death_date,
+        //     ];
+        // });
     }
 
     public function getNow()
@@ -45,7 +76,7 @@ class CitizenExport implements FromCollection, WithHeadings, WithStyles, WithMap
             'No. KK',
             'NIK',
             'Jenis Kelamin',
-            'Umur',
+            // 'Umur',
             'Jalan',
             'RT',
             'RW',
@@ -68,12 +99,18 @@ class CitizenExport implements FromCollection, WithHeadings, WithStyles, WithMap
         return [
             $this->count++,
             $citizen->name,
-            // DateTime::createFromFormat('Y/m/d', $citizen->birthday),
             $citizen->birthday,
             $citizen->kk_number,
             $citizen->nik_number,
             $citizen->gender,
-            $this->getNow(),
+            // function () use ($citizen){
+            //     $now = Carbon::now();
+            //     $ultah = Carbon::parse($citizen->birthday);
+            //     $age = $ultah->diffInYears($now);
+
+            //     return $age;
+            // },
+            $citizen->birthday,
             $citizen->street,
             $citizen->rt,
             $citizen->rw,

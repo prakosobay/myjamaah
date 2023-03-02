@@ -141,8 +141,6 @@ class SaldoKasController extends Controller
                 }
             }
 
-            // dd($query);
-
             return Excel::download(new SaldoExport($query), 'List Data Transaksi.xlsx');
         }
     }
