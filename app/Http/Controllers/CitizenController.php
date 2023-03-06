@@ -180,21 +180,25 @@ class CitizenController extends Controller
 
     public function import(Request $request)
     {
-        $request->validate([
-            'file' => ['required', 'file'],
-        ]);
+        // $request->validate([
+        //     'file' => ['required', 'mimes:xlsx,xls', 'max:2048'],
+        // ]);
+
+        // dd($request);
+        // $file = $request->file('jamaah');
+        // Excel::import(new CitizenImport, $file);
 
         DB::beginTransaction();
 
         try {
-
-            Excel::import(new CitizenImport, request()->file('file'));
-            DB::commit();
-            return redirect()->route('citizenTable')->with('success', 'Berhasil di Import');
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return back()->with('failed', $e->getMessage());
+            $file = $request->file('jamaah');
+            Excel::import(new CitizenImport, $file, null, \Maatwebsite\Excel\Excel::XLSX);
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            return redirect()->back()->withErrors($failures);
         }
+
+        return redirect()->back()->with('success', 'Data Berhasil di Import.');
     }
 
     public function export()

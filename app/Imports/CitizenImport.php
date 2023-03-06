@@ -4,8 +4,7 @@ namespace App\Imports;
 
 use App\Models\{Citizen, MasterEducation, MasterFamilyStatus, MasterSalary, MasterJob, MasterReligion, MasterResidenceStatus, MasterSocialStatus};
 use Illuminate\Support\{Collection, Str, Carbon};
-use Illuminate\Support\Facades\{DB};
-use Maatwebsite\Excel\Concerns\{ToCollection, WithHeadingRow};
+use Maatwebsite\Excel\Concerns\{ToCollection, WithHeadingRow, WithStartRow};
 use PhpOffice\PhpSpreadsheet\Exception;
 
 class CitizenImport implements ToCollection, WithHeadingRow
@@ -18,10 +17,11 @@ class CitizenImport implements ToCollection, WithHeadingRow
         // echo '<pre>';
         // var_dump($rows);
         // dd($rows);
+        // return response()->json(['rows' => $rows]);
         // die;
         foreach($rows as $row) {
 
-            $job = MasterJob::where('name', $row['pekerjaan'])->select('id')->first();
+            $job = MasterJob::where('name', $row['jalan'])->select('id')->first();
             if(!$job && !isset($job) && empty($job)){
                 throw new Exception('Pekerjaan Belum Terdaftar!');
                 // return back()->with('failed', 'Pekerjaan Belum Terdaftar!');
@@ -29,49 +29,49 @@ class CitizenImport implements ToCollection, WithHeadingRow
                 // die;
             }
 
-            $salary = MasterSalary::where('mulai', $row['penghasilan_mulai'])->select('id')->first();
+            $salary = MasterSalary::where('range', $row['Penghasilan per Bulan'])->select('id')->first();
             if(!$salary && !isset($salary) && empty($salary)){
                 throw new Exception('Penghasilan Belum Terdaftar!');
                 // dd("b");
                 // die;
             }
 
-            $religion = MasterReligion::where('name', $row['agama'])->select('id')->first();
+            $religion = MasterReligion::where('name', $row['Agama'])->select('id')->first();
             if(!$religion && !isset($religion) && empty($religion)){
                 throw new Exception('Agama Belum Terdaftar!');
                 // dd("c");
                 // die;
             }
 
-            $familyStatus = MasterFamilyStatus::where('name', $row['status_dalam_keluarga'])->select('id')->first();
+            $familyStatus = MasterFamilyStatus::where('name', $row['Status Dalam Keluarga'])->select('id')->first();
             if(!$familyStatus && !isset($familyStatus) && empty($familyStatus)){
                 throw new Exception('Status dalam Keluarga Belum Terdaftar!');
                 // dd("d");
                 // die;
             }
 
-            $education = MasterEducation::where('name', $row['pendidikan'])->select('id')->first();
+            $education = MasterEducation::where('name', $row['Pendidikan'])->select('id')->first();
             if(!$education && !isset($education) && empty($education)){
                 throw new Exception('Pendidikan Belum Terdaftar!');
                 // dd("e");
                 // die;
             }
 
-            $residenceStatus = MasterResidenceStatus::where('name', $row['status_tempat_tinggal'])->select('id')->first();
+            $residenceStatus = MasterResidenceStatus::where('name', $row['Status Tempat Tinggal'])->select('id')->first();
             if(!$residenceStatus && !isset($residenceStatus) && empty($residenceStatus)){
                 throw new Exception('Status Tempat Tinggal Belum Terdaftar!');
                 // dd("f");
                 // die;
             }
 
-            $socialStatus = MasterSocialStatus::where('name', $row['status_sosial'])->select('id')->first();
+            $socialStatus = MasterSocialStatus::where('name', $row['Status Sosial'])->select('id')->first();
             if(!$socialStatus && !isset($socialStatus) && empty($socialStatus)){
                 throw new Exception('Status Sosial Belum Terdaftar!');
                 // dd("g");
                 // die;
             }
 
-            $convert = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['tanggal_lahir']));
+            $convert = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row['Tanggal Lahir']));
             // dd($job->id);
 
             $citizen = Citizen::where('nik_number', $row['nik'])->first();
@@ -127,4 +127,9 @@ class CitizenImport implements ToCollection, WithHeadingRow
             }
         }
     }
+
+    // public function startRow(): int
+    // {
+    //     return 10;
+    // }
 }

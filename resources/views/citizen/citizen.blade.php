@@ -102,8 +102,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="file" class="form-label">Pilih File Excel</label>
-                        <input type="file" class="form-control" id="file" name="file" required>
+                        <label for="jamaah" class="form-label">Pilih File Excel</label>
+                        <input type="file" class="form-control" id="jamaah" name="jamaah" required>
                     </div>
                     <div class="form-group">
                         <button class="btn btn-danger mx-1 my-1" type="submit">Simpan</button>
