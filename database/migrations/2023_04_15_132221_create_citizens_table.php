@@ -26,8 +26,8 @@ return new class extends Migration
             $table->foreignUuid('updated_by')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->unsignedSmallInteger('rt');
             $table->unsignedSmallInteger('rw');
-            $table->string('kk_number', 16)->unique();
-            $table->string('nik_number', 16)->unique();
+            $table->string('kk_number')->unique();
+            $table->string('nik_number')->unique();
             $table->string('name');
             $table->date('birthday');
             $table->string('gender');

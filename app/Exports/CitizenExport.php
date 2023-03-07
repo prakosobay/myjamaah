@@ -110,7 +110,6 @@ class CitizenExport implements FromCollection, WithStyles, WithHeadings, WithMap
 
             //     return $age;
             // },
-            $citizen->birthday,
             $citizen->street,
             $citizen->rt,
             $citizen->rw,

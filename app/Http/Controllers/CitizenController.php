@@ -193,7 +193,9 @@ class CitizenController extends Controller
         try {
             $file = $request->file('jamaah');
             Excel::import(new CitizenImport, $file, null, \Maatwebsite\Excel\Excel::XLSX);
+            DB::commit();
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            DB::rollBack();
             $failures = $e->failures();
             return redirect()->back()->withErrors($failures);
         }

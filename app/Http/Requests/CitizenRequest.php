@@ -26,9 +26,9 @@ class CitizenRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'birthday' => ['required', 'date'],
-            'nik' => ['required', 'numeric', 'digits:16'],
+            'nik' => ['required', 'numeric'],
             'gender' => ['required', 'string'],
-            'kk' => ['required', 'numeric', 'digits:16'],
+            'kk' => ['required', 'numeric'],
             'phone' => ['required', 'string'],
             'street' => ['required', 'string'],
             'house_number' => ['required', 'numeric'],
