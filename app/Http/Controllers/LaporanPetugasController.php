@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreLaporanPetugas;
 use Illuminate\Http\Request;
-use App\Models\{LaporanPetugas};
+use App\Models\{LaporanPetugas, MasterPetugas};
 use Illuminate\Support\Facades\{DB};
 use Yajra\DataTables\Datatables;
 use Illuminate\Support\{Str, Carbon};
@@ -53,5 +53,52 @@ class LaporanPetugasController extends Controller
             return number_format($query->nominal, 2);
         })
         ->toJson();
+    }
+
+    public function petugas_table()
+    {
+        $petugas = MasterPetugas::all();
+        return view('master.petugas', compact('petugas'));
+    }
+
+    public function petugas_store(Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+
+            $create = MasterPetugas::create([
+                'name' => $request->name,
+                'updated_by' => auth()->user()->id,
+                'created_bys' => auth()->user()->id,
+            ]);
+
+            DB::commit();
+            return redirect()->route('petugasTable')->with('success', 'Data Tersimpan');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('gagal', $e->getMessage());
+        }
+    }
+
+    public function petugas_delete($id)
+    {
+        DB::beginTransaction();
+
+        try {
+
+            $get = MasterPetugas::findOrFail($id);
+            $get->delete();
+
+            DB::commit();
+            return redirect()->route('petugasTable')->with('success', 'Data Terhapus');
+        } catch(\Exception $e) {
+            DB::rollback();
+            return back()->with('gagal', $e->getMessage());
+        }
     }
 }
