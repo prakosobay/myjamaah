@@ -13,17 +13,18 @@ class LaporanPetugasController extends Controller
 {
     public function table()
     {
-        return view('petugas.table');
+        $petugas = MasterPetugas::all();
+        return view('petugas.table', compact('petugas'));
     }
 
-    public function store(StoreLaporanPetugas $request)
+    public function store(Request $request)
     {
         DB::beginTransaction();
 
         try {
 
             $create = LaporanPetugas::create([
-                'name' => $request->name,
+                'm_petugas_id' => $request->name,
                 'duty' => $request->duty,
                 'nominal' => $request->nominal,
                 'created_by' => auth()->user()->id,
@@ -40,7 +41,7 @@ class LaporanPetugasController extends Controller
 
     public function yajra()
     {
-        $query = LaporanPetugas::with('createdBy:id,name')->orderBy('date', 'asc')->get();
+        $query = LaporanPetugas::with(['createdBy:id,name', 'mPetugasId:id,name'])->orderBy('date', 'asc')->get();
         return Datatables::of($query)
         ->editColumn('date', function ($query) {
             return $query->date ? with(new Carbon($query->date))->format('d/m/Y') : '';
@@ -52,7 +53,7 @@ class LaporanPetugasController extends Controller
         ->addColumn('nominal', function ($query) {
             return number_format($query->nominal, 2);
         })
-        ->toJson();
+        ->make(true);
     }
 
     public function petugas_table()
@@ -74,14 +75,14 @@ class LaporanPetugasController extends Controller
             $create = MasterPetugas::create([
                 'name' => $request->name,
                 'updated_by' => auth()->user()->id,
-                'created_bys' => auth()->user()->id,
+                'created_by' => auth()->user()->id,
             ]);
 
             DB::commit();
             return redirect()->route('petugasTable')->with('success', 'Data Tersimpan');
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->with('gagal', $e->getMessage());
+            return back()->with('failed', $e->getMessage());
         }
     }
 
@@ -98,7 +99,7 @@ class LaporanPetugasController extends Controller
             return redirect()->route('petugasTable')->with('success', 'Data Terhapus');
         } catch(\Exception $e) {
             DB::rollback();
-            return back()->with('gagal', $e->getMessage());
+            return back()->with('failed', $e->getMessage());
         }
     }
 }

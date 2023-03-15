@@ -10,7 +10,7 @@ class MasterPetugas extends Model
 {
     use HasFactory, SoftDeletes, Uuid;
 
-    protected $table = 'master_petugas';
+    protected $table = 'm_petugas';
     protected $fillable = [
         'name',
         'created_by',

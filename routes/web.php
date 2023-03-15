@@ -106,6 +106,10 @@ Route::middleware(['auth'])->group(function(){
     Route::controller(LaporanPetugasController::class)->group(function () {
         Route::get('laporan-petugas/table', 'table')->name('tableLaporanPetugas');
         Route::get('laporan-petugas/yajra', 'yajra')->name('yajraLaporanPetugas');
+        Route::get('petugas/table', 'petugas_table')->name('petugasTable');
+
+        Route::post('petugas/store', 'petugas_store')->name('petugasStore');
+        Route::post('petugas/delete/{id}', 'petugas_delete')->name('petugasDelete');
         Route::post('laporan-petugas/store', 'store')->name('storeLaporanPetugas');
     });
 

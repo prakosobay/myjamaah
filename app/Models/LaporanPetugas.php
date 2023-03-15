@@ -12,7 +12,7 @@ class LaporanPetugas extends Model
 
     protected $table = 'laporan_petugas';
     protected $fillable = [
-        'name',
+        'm_petugas_id',
         'duty',
         'nominal',
         'created_by',
@@ -22,5 +22,10 @@ class LaporanPetugas extends Model
     public function createdBy()
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function mPetugasId()
+    {
+        return $this->belongsTo(MasterPetugas::class, 'm_petugas_id');
     }
 }

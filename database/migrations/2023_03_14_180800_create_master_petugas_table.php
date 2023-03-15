@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('master_petugas', function (Blueprint $table) {
+        Schema::create('m_petugas', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
             $table->foreignUuid('created_by')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('master_petugas');
+        Schema::dropIfExists('m_petugas');
     }
 };

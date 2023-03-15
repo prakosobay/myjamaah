@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('laporan_petugas', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
+            $table->foreignUuid('m_petugas_id')->constrained('m_petugas')->onUpdate('cascade')->onDelete('cascade');
             $table->string('duty');
             $table->unsignedBigInteger('nominal');
             $table->date('date');

@@ -57,7 +57,13 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="name" class="form-label"><b>Nama Petugas :</b></label>
-                        <input type="text" class="form-control" placeholder="Isi di sini" value="{{ old('name')}}" id="name" name="name" required>
+                        {{-- <input type="text" class="form-control" placeholder="Isi di sini" value="{{ old('name')}}" id="name" name="name" required> --}}
+                        <select name="name" id="name" class="form-select" required>
+                            <option selected></option>
+                            @foreach ( $petugas as $p )
+                                <option value="{{ $p->id }}">{{ $p->name }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="duty" class="form-label"><b>Tugas :</b></label>
@@ -91,7 +97,7 @@
                 ajax: "{{ route('yajraLaporanPetugas') }}",
                 columns: [
                     { data: 'DT_RowIndex', name: 'DT_RowIndex' },
-                    { data: 'name', name: 'name' },
+                    { data: 'mPetugasId.name', name: 'mPetugasId.name' },
                     { data: 'duty', name: 'duty' },
                     { data: 'date', name: 'date' },
                     { data: 'nominal', name: 'nominal' }
