@@ -180,14 +180,6 @@ class CitizenController extends Controller
 
     public function import(Request $request)
     {
-        // $request->validate([
-        //     'file' => ['required', 'mimes:xlsx,xls', 'max:2048'],
-        // ]);
-
-        // dd($request);
-        // $file = $request->file('jamaah');
-        // Excel::import(new CitizenImport, $file);
-
         DB::beginTransaction();
 
         try {

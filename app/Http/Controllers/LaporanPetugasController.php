@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\LaporanPetugasExport;
 use App\Http\Requests\StoreLaporanPetugas;
 use Illuminate\Http\Request;
 use App\Models\{LaporanPetugas, MasterPetugas};
 use Illuminate\Support\Facades\{DB};
 use Yajra\DataTables\Datatables;
 use Illuminate\Support\{Str, Carbon};
+use Maatwebsite\Excel\Facades\Excel;
 
 class LaporanPetugasController extends Controller
 {
@@ -42,6 +44,7 @@ class LaporanPetugasController extends Controller
     public function yajra()
     {
         $query = LaporanPetugas::with(['createdBy:id,name', 'mPetugasId:id,name'])->orderBy('date', 'asc')->get();
+        // return $query;
         return Datatables::of($query)
         ->editColumn('date', function ($query) {
             return $query->date ? with(new Carbon($query->date))->format('d/m/Y') : '';
@@ -101,5 +104,16 @@ class LaporanPetugasController extends Controller
             DB::rollback();
             return back()->with('failed', $e->getMessage());
         }
+    }
+
+    public function export_excel(Request $request)
+    {
+        // dd($request->all());
+        $name = $request->name;
+        $petugas = LaporanPetugas::whereHas('mPetugasId', function ($q) use ($name){
+            $q->where('id', $name);
+        })->with('mPetugasId:id,name')->get();
+        return $petugas;
+        return Excel::download(new LaporanPetugasExport($petugas), 'Data.xlsx');
     }
 }

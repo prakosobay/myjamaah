@@ -8,8 +8,11 @@
             <h1 class="h3 mb-2 text-gray-800 text-center"><b>Data Petugas</b></h1>
         </div>
         <div class="card-header py-3">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" class="btn btn-primary mr-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Tambah Data
+            </button>
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Export Excel
               </button>
         </div>
 
@@ -40,6 +43,36 @@
                     <tbody class="isi-table text-center">
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+
+    {{-- Modal Excel --}}
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route('laporanPetugas.exportExcel') }}" method="POST">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Export Data Petugas</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="name" class="form-label"><b>Nama Petugas :</b></label>
+                            <select name="name" id="name" class="form-select" required>
+                                <option selected></option>
+                                @foreach ( $petugas as $p )
+                                    <option value="{{ $p->id }}">{{ $p->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="cancel" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -94,10 +127,10 @@
             $('#petugas').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('yajraLaporanPetugas') }}",
+                ajax: "{{ url('laporan/petugas/yajra') }}",
                 columns: [
                     { data: 'DT_RowIndex', name: 'DT_RowIndex' },
-                    { data: 'mPetugasId.name', name: 'mPetugasId.name' },
+                    { data: 'm_petugas_id.name', name: 'm_petugas_id.name' },
                     { data: 'duty', name: 'duty' },
                     { data: 'date', name: 'date' },
                     { data: 'nominal', name: 'nominal' }
