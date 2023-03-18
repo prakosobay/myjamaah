@@ -153,12 +153,12 @@ class LaporanPetugasController extends Controller
 
     public function export_excel(Request $request)
     {
-        // dd($request->all());
         $name = $request->name;
+        // dd($name);
         $petugas = LaporanPetugas::whereHas('mPetugasId', function ($q) use ($name){
             $q->where('id', $name);
-        })->with('mPetugasId:id,name')->get();
-        return $petugas;
+        })->with('mPetugasId:id,name')->select('m_petugas_id', 'duty', 'nominal', 'date', 'status')->get();
+        // return $petugas;
         return Excel::download(new LaporanPetugasExport($petugas), 'Data.xlsx');
     }
 }

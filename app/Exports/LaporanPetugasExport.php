@@ -2,16 +2,18 @@
 
 namespace App\Exports;
 
-use Maatwebsite\Excel\Concerns\{FromCollection, WithHeadings, WithStyles};
+use Maatwebsite\Excel\Concerns\{FromCollection, WithHeadings, WithMapping, WithStyles};
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class LaporanPetugasExport implements FromCollection, WithHeadings, WithStyles
+class LaporanPetugasExport implements FromCollection, WithHeadings, WithStyles, WithMapping
 {
     /**
     * @return \Illuminate\Support\Collection
     */
 
-    public $query;
+    protected $query;
+    private $count = 1;
+
     public function __construct($query)
     {
         $this->query = $query;
@@ -25,9 +27,24 @@ class LaporanPetugasExport implements FromCollection, WithHeadings, WithStyles
     public function headings(): array
     {
         return [
+            'No.',
             'Nama Petugas',
             'Tugas',
             'Tanggal',
+            'Status',
+            'Nominal',
+        ];
+    }
+
+    public function map($query): array
+    {
+        return [
+            $this->count++,
+            $query->mPetugasId->name,
+            $query->duty,
+            $query->date,
+            $query->status,
+            $query->nominal,
         ];
     }
 
