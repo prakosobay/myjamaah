@@ -37,7 +37,9 @@
                             <th>Nama Petugas</th>
                             <th>Tugas</th>
                             <th>Tanggal</th>
+                            <th>Status</th>
                             <th>Nominal (Rp)</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody class="isi-table text-center">
@@ -111,6 +113,14 @@
                         <input type="date" class="form-control" value="{{ old('date') }}" id="date" name="date" required>
                     </div>
                     <div class="form-group">
+                        <label for="status" class="form-label"><b>Status :</b></label>
+                        <select name="status" id="status" class="form-select" required>
+                            <option selected></option>
+                            <option value="Sudah Dibayar">Sudah Dibayar</option>
+                            <option value="Belum Dibayar">Belum Dibayar</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <button class="btn btn-danger mx-1 my-1" type="submit">Simpan</button>
                         <button class="btn btn-secondary mx-1 my-1" data-dismiss="modal" type="button">Tidak</button>
                     </div>
@@ -133,7 +143,9 @@
                     { data: 'm_petugas_id.name', name: 'm_petugas_id.name' },
                     { data: 'duty', name: 'duty' },
                     { data: 'date', name: 'date' },
-                    { data: 'nominal', name: 'nominal' }
+                    { data: 'status', name: 'status' },
+                    { data: 'nominal', name: 'nominal' },
+                    { data: 'action', name: 'action', orderable: false, searchable: false }
                 ]
             });
         });

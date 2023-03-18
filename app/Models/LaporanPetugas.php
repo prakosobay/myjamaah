@@ -17,6 +17,7 @@ class LaporanPetugas extends Model
         'nominal',
         'created_by',
         'date',
+        'status',
     ];
 
     public function createdBy()

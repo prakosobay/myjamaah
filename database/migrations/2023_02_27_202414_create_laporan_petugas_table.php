@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('duty');
             $table->unsignedBigInteger('nominal');
             $table->date('date');
+            $table->string('status');
             $table->foreignUuid('created_by')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
             $table->softDeletes();

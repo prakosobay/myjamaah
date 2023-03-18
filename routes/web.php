@@ -107,10 +107,12 @@ Route::middleware(['auth'])->group(function(){
         Route::get('laporan/petugas/table', 'table')->name('tableLaporanPetugas');
         Route::get('laporan/petugas/yajra', 'yajra')->name('yajraLaporanPetugas');
         Route::get('petugas/table', 'petugas_table')->name('petugasTable');
+        Route::get('laporan/petugas/edit/{id}', 'edit')->name('petugas.edit');
 
         Route::post('laporan/petugas/export/excel', 'export_excel')->name('laporanPetugas.exportExcel');
         Route::post('petugas/store', 'petugas_store')->name('petugasStore');
-        Route::post('petugas/delete/{id}', 'petugas_delete')->name('petugasDelete');
+        Route::post('laporan/petugas/update/{id}', 'update')->name('petugas.update');
+        Route::post('petugas/delete/{id}', 'delete')->name('petugas.delete');
         Route::post('laporan-petugas/store', 'store')->name('storeLaporanPetugas');
     });
 
