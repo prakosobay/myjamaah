@@ -18,15 +18,14 @@ class SalaryController extends Controller
     {
         $request->validate([
             'mulai' => ['required'],
-            'sampai' => ['nullable'],
         ]);
 
         DB::beginTransaction();
 
         try {
 
-            $e = MasterSalary::create([
-                'range' => $request->mulai . ' ' . '-' . ' ' . $request->sampai,
+            MasterSalary::create([
+                'range' => $request->mulai,
                 'created_by' => auth()->user()->id,
                 'updated_by' => auth()->user()->id,
             ]);

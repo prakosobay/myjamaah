@@ -13,11 +13,11 @@
             <div class="row input-daterange">
                 <div class="col-md-3">
                     <label for="from_date" class="form-label"><b>Tanggal Mulai :</b></label>
-                    <input type="date" name="from_date" id="from_date" class="form-control" placeholder="From Date" required />
+                    <input type="date" name="from_date" id="from_date" class="form-control" placeholder="From Date" />
                 </div>
                 <div class="col-md-3">
                     <label for="to_date" class="form-label"><b>Tanggal Sampai :</b></label>
-                    <input type="date" name="to_date" id="to_date" class="form-control" placeholder="To Date" required />
+                    <input type="date" name="to_date" id="to_date" class="form-control" placeholder="To Date" />
                 </div>
                 <div class="col-md-3">
                     <label for="type" class="form-label"><b>Tipe Transaksi :</b></label>
@@ -93,6 +93,7 @@
     <script>
         $(document).ready( function () {
 
+            load_data();
             function load_data(from_date = '', to_date = '', type = ''){
                 $('#transaction').DataTable({
                     processing: true,
@@ -112,6 +113,7 @@
             }
 
             function load_data_total(from_date = '', to_date = '', type = ''){
+                let income, expense, total;
                 $.ajax({
                     type: 'GET', //THIS NEEDS TO BE GET
                     url: '{{ route('totalSaldo')}}',
@@ -120,20 +122,23 @@
                         if(data.length !== 0){
 
                             for (let i = 0; i < data.length; i++) {
-                               if(data[i].type_transaction === 'Pemasukan'){
-                                   var income = data[i].total;
-                                   console.log(parseInt(income).toLocaleString())
+                                if( data[i].type_transaction === 'Pemasukan' && data[i].type_transaction === 'Pengeluaran' ) {
+
+                                    total = income - expense;
+                                    // console.log(parseInt(total).toLocaleString())
+                                    $('#saldo_akhir').html(` Rp. ${parseInt(total).toLocaleString()}`);
+                                }
+                               else if(data[i].type_transaction === 'Pemasukan'){
+                                   income = data[i].total;
+                                //    console.log(parseInt(income).toLocaleString())
                                     $('#pemasukan').html(` Rp. ${parseInt(income).toLocaleString()}`);
                                }
 
                                else if(data[i].type_transaction === 'Pengeluaran'){
 
-                                    var expense = data[i].total;
+                                    expense = data[i].total;
                                     $('#pengeluaran').html(` Rp. ${parseInt(expense).toLocaleString()}`);
                                }
-
-                               var total = income - expense;
-                                $('#saldo_akhir').html(` Rp. ${parseInt(total).toLocaleString()}`);
                             }
                         }
 
@@ -145,8 +150,6 @@
                 });
             }
 
-
-
             $('#filter').click(function() {
                 var from_date = $('#from_date').val();
                 var to_date = $('#to_date').val();
@@ -154,6 +157,9 @@
 
                 if(from_date != '' &&  to_date != ''){
                     $('#transaction').DataTable().destroy();
+                    $('#pemasukan').val("")
+                    $('#pengeluaran').val("")
+                    $('#saldo_akhir').val("")
                     load_data(from_date, to_date, type);
                     load_data_total(from_date, to_date, type);
                 } else{

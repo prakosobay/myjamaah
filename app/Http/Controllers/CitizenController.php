@@ -7,6 +7,7 @@ use App\Http\Requests\CitizenRequest;
 use App\Imports\CitizenImport;
 use App\Models\{MasterReligion, Citizen, MasterEducation, MasterFamilyStatus, MasterJob, MasterResidenceStatus, MasterSalary, MasterSocialStatus};
 use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
 use Illuminate\Support\{Carbon};
 use Illuminate\Support\Facades\{DB};
 use Maatwebsite\Excel\Facades\Excel;
@@ -189,7 +190,13 @@ class CitizenController extends Controller
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
             DB::rollBack();
             $failures = $e->failures();
-            return redirect()->back()->withErrors($failures);
+            // return redirect()->back()->withErrors($failures);
+            foreach ($failures as $failure) {
+                $failure->row(); // row that went wrong
+                $failure->attribute(); // either heading key (if using heading row concern) or column index
+                $failure->errors(); // Actual error messages from Laravel validator
+                $failure->values(); // The values of the row that has failed.
+            }
         }
 
         return redirect()->back()->with('success', 'Data Berhasil di Import.');
@@ -239,5 +246,38 @@ class CitizenController extends Controller
     {
         $islam = MasterReligion::where('name', 'Islam')->first();
         return $islam->id;
+    }
+
+    public function yajra(Request $request)
+    {
+        if(request()->ajax()) {
+
+            $query = Citizen::with([
+                'createdBy:id,name',
+                'updatedBy:id,name',
+                'mJobId:id,name',
+                'mSalaryId:id,range',
+                'mReligionId:id,name',
+                'mFamilyStatusId:id,name',
+                'mEducationId:id,name',
+                'mResidenceStatusId:id,name',
+                'mSocialStatusId:id,name',
+            ])->orderBy('name', 'asc');
+
+            if(!empty($request->type)) {
+                $query = $query->where('rw', $request->type);
+            }
+
+            return Datatables::of($query)
+            ->addColumn('DT_RowIndex', function($row) {
+                static $index = 1;
+                return $index++;
+            })
+            ->addColumn('action', 'citizen.actionLink')
+            ->editColumn('birthday', function ($query) {
+                return $query->birthday ? with(new Carbon($query->birthday))->format('d-m-Y') : '';
+            })
+            ->toJson();
+        }
     }
 }

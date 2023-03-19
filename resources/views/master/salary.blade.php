@@ -13,33 +13,7 @@
                 Tambah Data
             </button>
 
-            {{-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <form method="post" action="{{ route('salaryStore')}}">
-                        @csrf
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Tambah Data</h5>
-                            </div>
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <label for="mulai" class="form-label"><b>Mulai :</b></label>
-                                    <input type="text" name="mulai" class="form-control" placeholder="Rp 1.000.000" required autofocus>
-                                </div>
-                                <div class="form-group">
-                                    <label for="sampai" class="form-label"><b>Sampai :</b></label>
-                                    <input type="text" name="sampai" class="form-control" placeholder="Rp 1.000.000">
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div> --}}
-
+            {{-- Modal --}}
             <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <form method="post" action="{{ route('salaryStore')}}">
@@ -50,12 +24,8 @@
                             </div>
                             <div class="modal-body">
                                 <div class="form-group">
-                                    <label for="mulai" class="form-label"><b>Mulai :</b></label>
+                                    <label for="mulai" class="form-label"><b>Penghasilan :</b></label>
                                     <input type="text" name="mulai" class="form-control" placeholder="Rp 1.000.000" required autofocus>
-                                </div>
-                                <div class="form-group">
-                                    <label for="sampai" class="form-label"><b>Sampai :</b></label>
-                                    <input type="text" name="sampai" class="form-control" placeholder="Rp 1.000.000">
                                 </div>
                             </div>
                             <div class="modal-footer">

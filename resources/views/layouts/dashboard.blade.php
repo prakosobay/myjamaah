@@ -43,10 +43,11 @@
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard')}}">
-                <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
+                <div class="sidebar-brand-icon">
+                    {{-- <i class="fas fa-laugh-wink"></i> --}}
+                    <img src="{{ asset('img/masjid_putih.png')}}" alt="masjid" width="50" height="50">
                 </div>
-                <div class="sidebar-brand-text mx-3">My Jamaah</div>
+                <div class="sidebar-brand-text mx-1">Jami At Taqwa</div>
             </a>
 
             <!-- Divider -->

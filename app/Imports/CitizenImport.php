@@ -4,11 +4,12 @@ namespace App\Imports;
 
 use App\Models\{Citizen, MasterEducation, MasterFamilyStatus, MasterSalary, MasterJob, MasterReligion, MasterResidenceStatus, MasterSocialStatus};
 use Illuminate\Support\{Collection, Str, Carbon};
-use Maatwebsite\Excel\Concerns\{ToCollection, WithHeadingRow, WithStartRow};
+use Maatwebsite\Excel\Concerns\{ToCollection, WithHeadingRow, WithStartRow, Importable, SkipsEmptyRows};
 use PhpOffice\PhpSpreadsheet\Exception;
 
-class CitizenImport implements ToCollection, WithHeadingRow, WithStartRow
+class CitizenImport implements ToCollection, WithHeadingRow, WithStartRow, SkipsEmptyRows
 {
+    use Importable;
     /**
     * @param Collection $collection
     */
@@ -24,54 +25,39 @@ class CitizenImport implements ToCollection, WithHeadingRow, WithStartRow
             $convert = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[6]));
 
             $job = MasterJob::where('name', $row[13])->select('id')->first();
-            if(!$job && !isset($job) && empty($job) && $job === ''){
-                throw new Exception('Pekerjaan Belum Terdaftar!');
-                // return back()->with('failed', 'Pekerjaan Belum Terdaftar!');
-                // dd("a");
-                // die;
+            if(!$job && !isset($job) && $job == null){
+                throw new Exception($row[13] . ' Belum Terdaftar!');
             }
 
             $salary = MasterSalary::where('range', $row[14])->select('id')->first();
             // dd($salary->id);
-            if(!$salary && !isset($salary) && empty($salary) && $salary === ''){
-                throw new Exception('Penghasilan Belum Terdaftar!');
-                // dd("b");
-                // die;
+            if(!$salary && !isset($salary) && $salary == null){
+                throw new Exception($row[14] . ' Belum Terdaftar!');
             }
 
             $religion = MasterReligion::where('name', $row[15])->select('id')->first();
-            if(!$religion && !isset($religion) && empty($religion) && $religion === ''){
-                throw new Exception('Agama Belum Terdaftar!');
-                // dd("c");
-                // die;
+            if(!$religion && !isset($religion) && $religion == null){
+                throw new Exception($row[15] . ' Belum Terdaftar!');
             }
 
             $familyStatus = MasterFamilyStatus::where('name', $row[18])->select('id')->first();
-            if(!$familyStatus && !isset($familyStatus) && empty($familyStatus) && $familyStatus === ''){
-                throw new Exception('Status dalam Keluarga Belum Terdaftar!');
-                // dd("d");
-                // die;
+            if(!$familyStatus && !isset($familyStatus) && $familyStatus == null){
+                throw new Exception($row[18] . ' Belum Terdaftar!');
             }
 
             $education = MasterEducation::where('name', $row[19])->select('id')->first();
-            if(!$education && !isset($education) && empty($education) && $education === ''){
-                throw new Exception('Pendidikan Belum Terdaftar!');
-                // dd("e");
-                // die;
+            if(!$education && !isset($education) && $education == null){
+                throw new Exception($row[19] . ' Belum Terdaftar!');
             }
 
             $residenceStatus = MasterResidenceStatus::where('name', $row[20])->select('id')->first();
-            if(!$residenceStatus && !isset($residenceStatus) && empty($residenceStatus) && $residenceStatus === ''){
-                throw new Exception('Status Tempat Tinggal Belum Terdaftar!');
-                // dd("f");
-                // die;
+            if(!$residenceStatus && !isset($residenceStatus) && $residenceStatus == null){
+                throw new Exception($row[20] . ' Belum Terdaftar!');
             }
 
-            $socialStatus = MasterSocialStatus::where('name', $row[21])->select('id')->first();
-            if(!$socialStatus && !isset($socialStatus) && empty($socialStatus) && $socialStatus === ''){
-                throw new Exception('Status Sosial Belum Terdaftar!');
-                // dd("g");
-                // die;
+            $socialStatus = MasterSocialStatus::where('name', $row[21])->first();
+            if(!$residenceStatus && !isset($residenceStatus) && $socialStatus == null){
+                throw new Exception($row[21] . ' Belum Terdaftar!');
             }
 
             $citizen = Citizen::where('nik_number', $row[4])->first();
@@ -94,7 +80,7 @@ class CitizenImport implements ToCollection, WithHeadingRow, WithStartRow
                     'm_family_status_id' => $familyStatus->id,
                     'm_education_id' => $education->id,
                     'm_residence_status_id' => $residenceStatus->id,
-                    'm_social_status_id' => $socialStatus->id,
+                    'm_social_status_id' => isset($socialStatus->id),
                     'updated_by' => auth()->user()->id,
                 ]);
             } else {
@@ -119,13 +105,10 @@ class CitizenImport implements ToCollection, WithHeadingRow, WithStartRow
                     'm_family_status_id' => $familyStatus->id,
                     'm_education_id' => $education->id,
                     'm_residence_status_id' => $residenceStatus->id,
-                    'm_social_status_id' => $socialStatus->id,
+                    'm_social_status_id' => isset($socialStatus->id),
                     'updated_by' => auth()->user()->id,
                     'created_by' => auth()->user()->id,
-                    // 'updated_at' => now(),
-                    // 'created_at' => now(),
                 ]);
-                // dd($tes);
             }
         }
     }

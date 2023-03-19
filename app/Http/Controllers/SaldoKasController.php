@@ -28,7 +28,7 @@ class SaldoKasController extends Controller
     public function storeTransaction(StoreTransactionRequest $request)
     {
         $data = $request->all();
-        // dd($data);
+
         DB::beginTransaction();
 
         try {
@@ -88,7 +88,7 @@ class SaldoKasController extends Controller
                 return $getTransactions->val ? number_format($getTransactions->val) : '';
             })
             ->editColumn('date_trans', function ($getTransactions) {
-                return $getTransactions->date_trans ? with(new Carbon($getTransactions->date_trans))->format('d/m/Y') : '';
+                return $getTransactions->date_trans ? with(new Carbon($getTransactions->date_trans))->format('d-m-Y') : '';
             })
             ->toJson();
         }

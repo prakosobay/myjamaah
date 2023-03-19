@@ -3,7 +3,6 @@
 @section('content')
 
 <div class="container-fluid">
-    {{-- datatable --}}
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h1 class="h3 mb-2 text-gray-800 text-center"><b>Input Data Transaksi</b></h1>
@@ -28,16 +27,6 @@
                     <button type="submit" class="btn btn-success mx-3">
                         Simpan
                     </button>
-
-                    {{-- @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif --}}
                 </div>
 
                 <div class="card-body" id="input-container">
