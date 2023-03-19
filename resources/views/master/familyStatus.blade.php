@@ -9,11 +9,12 @@
             <h1 class="h3 mb-2 text-gray-800 text-center">Status Keluarga</h1>
         </div>
         <div class="card-header py-3">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
                 Tambah Data
             </button>
 
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            {{-- Modal --}}
+            <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <form method="post" action="{{ route('familyStatusStore')}}">
                         @csrf
@@ -63,8 +64,9 @@
                     </thead>
                     <tbody class="isi-table text-center">
                         @foreach ( $get as $status )
+
                         <!-- Modal -->
-                        <div class="modal fade" id="deleteModal{{ $status->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel{{ $status->id }}" aria-hidden="true">
+                        <div class="modal fade" id="deleteModal{{ $status->id }}" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel{{ $status->id }}" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <form method="post" action="{{ route('familyStatusDelete', $status->id)}}">
                                     @csrf
@@ -72,23 +74,22 @@
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">Anda Yakin Ingin Menghapus ?</h5>
                                         </div>
-                                        <div class="modal-body">
-                                            <div class="form-group">
-                                                <button class="btn btn-danger mx-1 my-1" type="submit">Yes</button>
-                                                <button class="btn btn-secondary mx-1 my-1" data-dismiss="modal" type="button">No</button>
-                                            </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                            <button type="submit" class="btn btn-danger">Yakin</button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
                         </div>
+
                         <tr>
                             <td>{{ $loop->iteration  }}</td>
                             <td>{{ $status->name }}</td>
                             <td>{{ $status->updatedBy->name }}</td>
                             <td>{{ $status->updated_at }}</td>
                             <td>
-                                <button type="button" class="btn btn-danger btn-sm mx-1 my-1" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $status->id }}" data-id="{{ $status->id }}">
+                                <button type="button" class="btn btn-danger btn-sm mx-1 my-1" data-toggle="modal" data-target="#deleteModal{{ $status->id }}" data-id="{{ $status->id }}">
                                     Delete
                                 </button>
                             </td>
@@ -96,8 +97,6 @@
                         @endforeach
                     </tbody>
                 </table>
-
-
             </div>
         </div>
     </div>

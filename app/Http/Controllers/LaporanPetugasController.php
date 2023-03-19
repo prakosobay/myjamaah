@@ -19,6 +19,12 @@ class LaporanPetugasController extends Controller
         return view('petugas.table', compact('petugas'));
     }
 
+    public function edit($id)
+    {
+        $petugas = LaporanPetugas::findOrFail($id);
+        return view('petugas.edit', compact('petugas'));
+    }
+
     public function store(Request $request)
     {
         DB::beginTransaction();
@@ -31,6 +37,7 @@ class LaporanPetugasController extends Controller
                 'nominal' => $request->nominal,
                 'created_by' => auth()->user()->id,
                 'date' => $request->date,
+                'status' => $request->status,
             ]);
 
             DB::commit();
@@ -41,10 +48,48 @@ class LaporanPetugasController extends Controller
         }
     }
 
+    public function update(Request $request, $id)
+    {
+        DB::beginTransaction();
+
+        try {
+
+            $laporan = LaporanPetugas::findOrFail($id);
+            $laporan->update([
+                'duty' => $request->duty,
+                'nominal' => $request->nominal,
+                'date' => $request->date,
+                'status' => $request->status,
+            ]);
+
+            DB::commit();
+            return redirect()->route('tableLaporanPetugas')->with('success', 'Berhasil di Update');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('failed', $e->getMessage());
+        }
+    }
+
+    public function delete($id)
+    {
+        DB::beginTransaction();
+
+        try {
+
+            $laporan = LaporanPetugas::findOrFail($id);
+            $laporan->delete();
+
+            DB::commit();
+            return back()->with('success', 'Terhapus');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('failed', $e->getMessage());
+        }
+    }
+
     public function yajra()
     {
         $query = LaporanPetugas::with(['createdBy:id,name', 'mPetugasId:id,name'])->orderBy('date', 'asc')->get();
-        // return $query;
         return Datatables::of($query)
         ->editColumn('date', function ($query) {
             return $query->date ? with(new Carbon($query->date))->format('d/m/Y') : '';
@@ -53,6 +98,7 @@ class LaporanPetugasController extends Controller
             static $index = 1;
             return $index++;
         })
+        ->addColumn('action', 'petugas.actionLink')
         ->addColumn('nominal', function ($query) {
             return number_format($query->nominal, 2);
         })
@@ -108,12 +154,11 @@ class LaporanPetugasController extends Controller
 
     public function export_excel(Request $request)
     {
-        // dd($request->all());
         $name = $request->name;
         $petugas = LaporanPetugas::whereHas('mPetugasId', function ($q) use ($name){
             $q->where('id', $name);
         })->with('mPetugasId:id,name')->get();
-        return $petugas;
+
         return Excel::download(new LaporanPetugasExport($petugas), 'Data.xlsx');
     }
 }

@@ -13,9 +13,33 @@
                 Tambah Data
             </a>
 
-            <button type="button" class="btn btn-success mx-2" data-bs-toggle="modal" data-bs-target="#importModal">
+            <button type="button" class="btn btn-success mx-2" data-toggle="modal" data-target="#staticBackdrop">
                 Import Excel
             </button>
+
+              <!-- Modal Import Excel -->
+            <div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <form method="post" action="{{ route('citizenImport')}}" enctype="multipart/form-data">
+                        @csrf
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Import Excel</h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="jamaah" class="form-label">Pilih File Excel</label>
+                                    <input type="file" class="form-control" id="jamaah" name="jamaah" required>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
             <a type="button" class="btn btn-secondary mx-2" href="{{ route('citizenExport')}}">
                 Export Excel
@@ -88,30 +112,6 @@
                 </table>
             </div>
         </div>
-    </div>
-</div>
-
-<!-- Modal Import-->
-<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <form method="post" action="{{ route('citizenImport')}}" enctype="multipart/form-data">
-            @csrf
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Import Excel</h5>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="jamaah" class="form-label">Pilih File Excel</label>
-                        <input type="file" class="form-control" id="jamaah" name="jamaah" required>
-                    </div>
-                    <div class="form-group">
-                        <button class="btn btn-danger mx-1 my-1" type="submit">Simpan</button>
-                        <button class="btn btn-secondary mx-1 my-1" data-dismiss="modal" type="button">Tidak</button>
-                    </div>
-                </div>
-            </div>
-        </form>
     </div>
 </div>
 

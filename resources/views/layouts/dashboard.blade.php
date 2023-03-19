@@ -81,10 +81,10 @@
                         <a class="collapse-item" href="{{ route('salaryTable')}}">Penghasilan Per Bulan</a>
                         <a class="collapse-item" href="{{ route('jobTable')}}">Pekerjaan</a>
                         <a class="collapse-item" href="{{ route('educationTable')}}">Pendidikan</a>
-                        <a class="collapse-item" href="{{ route('petugasTable')}}">Petugas</a>
                         <a class="collapse-item" href="{{ route('familyStatusTable')}}">Status Keluarga</a>
                         <a class="collapse-item" href="{{ route('socialStatusTable')}}">Status Social</a>
                         <a class="collapse-item" href="{{ route('residenceStatusTable')}}">Status Tempat Tinggal</a>
+                        <a class="collapse-item" href="{{ route('petugasTable')}}">Petugas</a>
                     </div>
                 </div>
             </li>
