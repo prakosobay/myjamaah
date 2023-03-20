@@ -26,7 +26,7 @@
         @endif
 
         <div class="card-body">
-            <form method="post" action="{{ route('petugasUpdate', $petugas->id) }}">
+            <form method="post" action="{{ route('petugas.update', $petugas->id) }}">
                 @csrf
                 <div class="row">
                     <div class="col-md-4">

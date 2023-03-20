@@ -35,6 +35,18 @@
             </div>
         </div>
 
+        @if (session('success'))
+            <div class="alert alert-success mx-2 my-2 text-center">
+                <b>{{ session('success') }}</b>
+            </div>
+        @endif
+
+        @if (session('failed'))
+            <div class="alert alert-danger mx-2 my-2 text-center">
+                <b>{{ session('failed') }}</b>
+            </div>
+        @endif
+
         {{-- Table --}}
         <div class="card-body">
             <div class="table-responsive">
@@ -46,6 +58,7 @@
                             <th>Tipe</th>
                             <th>Nama Transaksi</th>
                             <th class="currency">Nominal (Rp)</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody class="isi-table text-center">
@@ -107,7 +120,8 @@
                         { data: 'date_trans', name: 'date_trans' },
                         { data: 'type', name: 'type' },
                         { data: 'name', name: 'name' },
-                        { data: 'val', name: 'val' }
+                        { data: 'val', name: 'val' },
+                        { data: 'action', name: 'action', orderable: false, searchable: false }
                     ]
                 });
             }

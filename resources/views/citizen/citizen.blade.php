@@ -85,7 +85,7 @@
                         <tr class="judul-table text-center">
                             <th>No. </th>
                             <th>Nama</th>
-                            <th>No. KK</th>
+                            <th>NIK</th>
                             <th>RW</th>
                             <th>Tanggal Lahir</th>
                             <th>Pilihan</th>
@@ -123,7 +123,7 @@
                     columns: [
                         { data: 'DT_RowIndex', name: 'DT_RowIndex' },
                         { data: 'name', name: 'name' },
-                        { data: 'kk_number', name: 'kk_number' },
+                        { data: 'nik_number', name: 'nik_number' },
                         { data: 'rw', name: 'rw' },
                         { data: 'birthday', name: 'birthday' },
                         { data: 'action', name: 'action', orderable: false, searchable: false }

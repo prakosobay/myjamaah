@@ -60,6 +60,51 @@ class SaldoKasController extends Controller
         return view('kas.table');
     }
 
+    public function edit($id)
+    {
+        $get = Transaction::findOrFail($id);
+        return view('kas.edit', compact('get'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        DB::beginTransaction();
+
+        try {
+
+            $get = Transaction::findOrFail($id);
+            $get->update([
+                'name' => $request->name,
+                'date_trans' => $request->date_trans,
+                'type' => $request->type,
+                'val' => $request->nominal,
+            ]);
+
+            DB::commit();
+            return redirect()->route('tableTransaction')->with('success', 'Data Berhasil di Update');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+    }
+
+    public function delete($id)
+    {
+        DB::beginTransaction();
+
+        try {
+
+            $get = Transaction::findOrFail($id);
+            $get->delete();
+
+            DB::commit();
+            return redirect()->route('tableTransaction')->with('success', 'Data Berhasil di Hapus');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+    }
+
     public function yajraTransaction(Request $request)
     {
         if(request()->ajax()) {
@@ -84,6 +129,7 @@ class SaldoKasController extends Controller
                 static $index = 1;
                 return $index++;
             })
+            ->addColumn('action', 'kas.actionLink')
             ->editColumn('val', function($getTransactions) {
                 return $getTransactions->val ? number_format($getTransactions->val) : '';
             })
