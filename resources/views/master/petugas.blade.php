@@ -68,7 +68,7 @@
                         <!-- Modal -->
                         <div class="modal fade" id="deleteModal{{ $p->id }}" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel{{ $p->id }}" aria-hidden="true">
                             <div class="modal-dialog" role="document">
-                                <form method="post" action="{{ route('petugasDelete', $p->id)}}">
+                                <form method="post" action="{{ url('petugas/delete', $p->id)}}">
                                     @csrf
                                     <div class="modal-content">
                                         <div class="modal-header">

@@ -2,10 +2,11 @@
 
 namespace App\Exports;
 
-use Maatwebsite\Excel\Concerns\{FromCollection, WithHeadings, WithMapping, WithStyles};
+use Illuminate\Support\{Carbon};
+use Maatwebsite\Excel\Concerns\{FromCollection, WithHeadings, WithMapping, WithStyles, ShouldAutoSize};
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class LaporanPetugasExport implements FromCollection, WithHeadings, WithStyles, WithMapping
+class LaporanPetugasExport implements FromCollection, WithHeadings, WithStyles, WithMapping, ShouldAutoSize
 {
     /**
     * @return \Illuminate\Support\Collection
@@ -50,7 +51,7 @@ class LaporanPetugasExport implements FromCollection, WithHeadings, WithStyles, 
             $this->count++,
             $query->mPetugasId->name,
             $query->duty,
-            $query->date,
+            isset($query->date) ? Carbon::createFromFormat('Y-m-d', $query->date)->format('d/m/Y') : null,
             $query->status,
             $query->nominal,
         ];

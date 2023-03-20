@@ -121,7 +121,7 @@ class LaporanPetugasController extends Controller
 
         try {
 
-            $create = MasterPetugas::create([
+            MasterPetugas::create([
                 'name' => $request->name,
                 'updated_by' => auth()->user()->id,
                 'created_by' => auth()->user()->id,
