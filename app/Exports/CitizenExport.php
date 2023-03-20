@@ -2,12 +2,11 @@
 
 namespace App\Exports;
 
-use App\Models\Citizen;
 use Illuminate\Support\{Carbon};
-use Maatwebsite\Excel\Concerns\{FromCollection, WithHeadings, WithMapping, WithStyles};
+use Maatwebsite\Excel\Concerns\{FromCollection, WithHeadings, WithMapping, WithStyles, ShouldAutoSize};
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class CitizenExport implements FromCollection, WithStyles, WithHeadings, WithMapping
+class CitizenExport implements FromCollection, WithStyles, WithHeadings, WithMapping, ShouldAutoSize
 {
     /**
     * @return \Illuminate\Support\Collection
@@ -99,11 +98,11 @@ class CitizenExport implements FromCollection, WithStyles, WithHeadings, WithMap
         return [
             $this->count++,
             $citizen->name,
-            $citizen->birthday,
+            isset($citizen->birthday) ? Carbon::createFromFormat('Y-m-d', $citizen->birthday)->format('d/m/Y') : null,
             $citizen->kk_number,
             $citizen->nik_number,
             $citizen->gender,
-            Carbon::parse($citizen->birthday)->diffInYears(Carbon::now()),
+            isset($citizen->birthday) ? Carbon::parse($citizen->birthday)->diffInYears(Carbon::now()) : null,
             $citizen->street,
             $citizen->rt,
             $citizen->rw,

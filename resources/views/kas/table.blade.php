@@ -122,13 +122,7 @@
                         if(data.length !== 0){
 
                             for (let i = 0; i < data.length; i++) {
-                                if( data[i].type_transaction === 'Pemasukan' && data[i].type_transaction === 'Pengeluaran' ) {
-
-                                    total = income - expense;
-                                    // console.log(parseInt(total).toLocaleString())
-                                    $('#saldo_akhir').html(` Rp. ${parseInt(total).toLocaleString()}`);
-                                }
-                               else if(data[i].type_transaction === 'Pemasukan'){
+                               if(data[i].type_transaction === 'Pemasukan'){
                                    income = data[i].total;
                                 //    console.log(parseInt(income).toLocaleString())
                                     $('#pemasukan').html(` Rp. ${parseInt(income).toLocaleString()}`);
@@ -139,6 +133,9 @@
                                     expense = data[i].total;
                                     $('#pengeluaran').html(` Rp. ${parseInt(expense).toLocaleString()}`);
                                }
+
+                                total = income - expense;
+                                $('#saldo_akhir').html(` Rp. ${parseInt(total).toLocaleString()}`);
                             }
                         }
 
@@ -157,9 +154,6 @@
 
                 if(from_date != '' &&  to_date != ''){
                     $('#transaction').DataTable().destroy();
-                    $('#pemasukan').val("")
-                    $('#pengeluaran').val("")
-                    $('#saldo_akhir').val("")
                     load_data(from_date, to_date, type);
                     load_data_total(from_date, to_date, type);
                 } else{
