@@ -233,12 +233,9 @@ class CitizenController extends Controller
                 $q->select('id', 'name');
             },
         ])
-        ->where('m_religion_id', $this->getIslam())
-        // ->select(
-        //     'name', 'birthday', 'kk_number', 'nik_number', 'gender', 'street', 'rt', 'rw', 'house_number', 'phone', 'marriage_status', 'm_education_id', 'm_job_id', 'm_salary_id', 'm_religion_id', 'm_family_status_id', 'm_residence_status_id', 'm_social_status_id', 'death_date',
-        // )
+        ->orderBy('rt', 'asc')
         ->get();
-        // return response()->json(['citizen' => $citizen]);
+
         return Excel::download(new CitizenExport($citizen), 'Data Jamaah.xlsx');
     }
 
@@ -262,7 +259,7 @@ class CitizenController extends Controller
                 'mEducationId:id,name',
                 'mResidenceStatusId:id,name',
                 'mSocialStatusId:id,name',
-            ])->orderBy('name', 'asc');
+            ]);
 
             if(!empty($request->type)) {
                 $query = $query->where('rw', $request->type);

@@ -47,7 +47,7 @@
                     {{-- <i class="fas fa-laugh-wink"></i> --}}
                     <img src="{{ asset('img/masjid_putih.png')}}" alt="masjid" width="50" height="50">
                 </div>
-                <div class="sidebar-brand-text mx-1">Jami At Taqwa</div>
+                <div class="sidebar-brand-text mx-1">Jami At Taqwa Rorotan</div>
             </a>
 
             <!-- Divider -->

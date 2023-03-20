@@ -76,7 +76,7 @@ class CitizenExport implements FromCollection, WithStyles, WithHeadings, WithMap
             'No. KK',
             'NIK',
             'Jenis Kelamin',
-            // 'Umur',
+            'Umur',
             'Jalan',
             'RT',
             'RW',
@@ -103,26 +103,20 @@ class CitizenExport implements FromCollection, WithStyles, WithHeadings, WithMap
             $citizen->kk_number,
             $citizen->nik_number,
             $citizen->gender,
-            // function () use ($citizen){
-            //     $now = Carbon::now();
-            //     $ultah = Carbon::parse($citizen->birthday);
-            //     $age = $ultah->diffInYears($now);
-
-            //     return $age;
-            // },
+            Carbon::parse($citizen->birthday)->diffInYears(Carbon::now()),
             $citizen->street,
             $citizen->rt,
             $citizen->rw,
             $citizen->house_number,
             $citizen->phone,
             $citizen->marriage_status,
-            $citizen->mEducationId->name,
-            $citizen->mJobId->name,
-            $citizen->mSalaryId->range,
-            $citizen->mReligionId->name,
-            $citizen->mFamilyStatusId->name,
-            $citizen->mResidenceStatusId->name,
-            $citizen->mSocialStatusId->name,
+            isset($citizen->mEducationId->name) ? $citizen->mEducationId->name : null,
+            isset($citizen->mJobId->name) ? $citizen->mJobId->name : null,
+            isset($citizen->mSalaryId->range) ? $citizen->mSalaryId->range : null,
+            isset($citizen->mReligionId->name) ? $citizen->mReligionId->name : null,
+            isset($citizen->mFamilyStatusId->name) ? $citizen->mFamilyStatusId->name : null,
+            isset($citizen->mResidenceStatusId->name) ? $citizen->mResidenceStatusId->name : null,
+            isset($citizen->mSocialStatusId->name) ? $citizen->mSocialStatusId->name : null,
             $citizen->death_date,
         ];
     }

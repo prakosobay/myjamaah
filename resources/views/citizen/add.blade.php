@@ -53,7 +53,7 @@
                             </div>
                             <div class="form-group my-2">
                                 <label for="birthday" class="form-label"><b>Tanggal Lahir :</b></label>
-                                <input type="date" id="birthday" value="{{ old('birthday')}}" name="birthday" class="form-control" required>
+                                <input type="date" id="birthday" value="{{ old('birthday')}}" name="birthday" class="form-control">
                             </div>
                         </div>
 
@@ -64,7 +64,7 @@
                             </div>
                             <div class="form-group my-2">
                                 <label for="gender" class="form-label"><b>Jenis Kelamin :</b></label>
-                                <select name="gender" id="gender" class="form-select" required>
+                                <select name="gender" id="gender" class="form-select">
                                     <option selected></option>
                                     <option value="Laki-laki">Laki-laki</option>
                                     <option value="Perempuan">Perempuan</option>
@@ -75,11 +75,11 @@
                         <div class="col-4">
                             <div class="form-group my-2">
                                 <label for="kk" class="form-label"><b>No. KK :</b></label>
-                                <input type="text" id="kk" name="kk" value="{{ old('kk')}}" class="form-control" required>
+                                <input type="text" id="kk" name="kk" value="{{ old('kk')}}" class="form-control">
                             </div>
                             <div class="form-group my-2">
                                 <label for="phone" class="form-label"><b>No. Telepon :</b></label>
-                                <input type="text" id="phone" name="phone" value="{{ old('phone')}}" class="form-control" placeholder="Gunakan +62 xxxx" required>
+                                <input type="text" id="phone" name="phone" value="{{ old('phone')}}" class="form-control" placeholder="Gunakan +62 xxxx" >
                             </div>
                         </div>
                     </div>
@@ -88,13 +88,13 @@
                         <div class="col-6">
                             <div class="form-group my-2">
                                 <label for="street" class="form-label"><b>Jalan :</b></label>
-                                <input type="text" id="street" class="form-control" name="street" value="{{ old('street')}}" required>
+                                <input type="text" id="street" class="form-control" name="street" value="{{ old('street')}}" >
                             </div>
                         </div>
                         <div class="col-2">
                             <div class="form-group my-2">
                                 <label for="rt" class="form-label"><b>RT :</b></label>
-                                <select name="rt" id="rt" class="form-select" required>
+                                <select name="rt" id="rt" class="form-select" >
                                     <option selected></option>
                                     @for ( $i = 1; $i < 14; $i++)
                                         <option value="{{$i}}">{{$i}}</option>
@@ -105,7 +105,7 @@
                         <div class="col-2">
                             <div class="form-group my-2">
                                 <label for="rw" class="form-label"><b>RW :</b></label>
-                                <select name="rw" id="rw" class="form-select" required>
+                                <select name="rw" id="rw" class="form-select" >
                                     <option selected></option>
                                     <option value="04">04</option>
                                     <option value="06">06</option>
@@ -115,7 +115,7 @@
                         <div class="col-2">
                             <div class="form-group my-2">
                                 <label for="house_number" class="form-label"><b>No :</b></label>
-                                <input type="text" id="house_number" name="house_number" value="{{ old('house_number')}}" class="form-control" required>
+                                <input type="text" id="house_number" name="house_number" value="{{ old('house_number')}}" class="form-control" >
                             </div>
                         </div>
                     </div>
@@ -124,7 +124,7 @@
                         <div class="col-4">
                             <div class="form-group my-2">
                                 <label for="job" class="form-label"><b>Pekerjaan :</b></label>
-                                <select name="job" id="job" class="form-select" required>
+                                <select name="job" id="job" class="form-select" >
                                     <option selected></option>
                                     @foreach ( $jobs as $job )
                                         <option value="{{ $job->id }}">{{ $job->name }}</option>
@@ -133,7 +133,7 @@
                             </div>
                             <div class="form-group my-2">
                                 <label for="education" class="form-label"><b>Pendidikan :</b></label>
-                                <select name="education" id="education" class="form-select" required>
+                                <select name="education" id="education" class="form-select" >
                                     <option selected></option>
                                     @foreach ( $educations as $education )
                                         <option value="{{ $education->id }}">{{ $education->name }}</option>
@@ -142,7 +142,7 @@
                             </div>
                             <div class="form-group my-2">
                                 <label for="residenceStatus" class="form-label"><b>Status Tempat Tinggal :</b></label>
-                                <select name="residenceStatus" id="residenceStatus" class="form-select" required>
+                                <select name="residenceStatus" id="residenceStatus" class="form-select" >
                                     <option selected></option>
                                     @foreach ( $residenceStatuses as $residenceStatus )
                                         <option value="{{ $residenceStatus->id }}">{{ $residenceStatus->name }}</option>
@@ -160,7 +160,7 @@
                         <div class="col-4">
                             <div class="form-group my-2">
                                 <label for="salary" class="form-label"><b>Penghasilan Per Bulan :</b></label>
-                                <select name="salary" id="salary" class="form-select" required>
+                                <select name="salary" id="salary" class="form-select" >
                                     <option selected></option>
                                     @foreach ( $salaries as $salary )
                                         <option value="{{ $salary->id }}">{{ ($salary->range) }}</option>
@@ -169,7 +169,7 @@
                             </div>
                             <div class="form-group my-2">
                                 <label for="marriageStatus" class="form-label"><b>Status Perkawinan :</b></label>
-                                <select name="marriageStatus" id="marriageStatus" class="form-select" required>
+                                <select name="marriageStatus" id="marriageStatus" class="form-select" >
                                     <option selected></option>
                                     <option value="Belom Kawin">Belom Kawin</option>
                                     <option value="Kawin">Kawin</option>
@@ -179,7 +179,7 @@
                             </div>
                             <div class="form-group my-2">
                                 <label for="socialStatus" class="form-label"><b>Status Social :</b></label>
-                                <select name="socialStatus" id="socialStatus" class="form-select" required>
+                                <select name="socialStatus" id="socialStatus" class="form-select" >
                                     <option selected></option>
                                     @foreach ( $socialStatuses as $socialStatus )
                                         <option value="{{ $socialStatus->id }}">{{ $socialStatus->name }}</option>
@@ -194,7 +194,7 @@
                         <div class="col-4">
                             <div class="form-group my-2">
                                 <label for="religion" class="form-label"><b>Agama :</b></label>
-                                <select name="religion" id="religion" class="form-select" required>
+                                <select name="religion" id="religion" class="form-select" >
                                     <option selected></option>
                                     @foreach ( $religions as $religion )
                                         <option value="{{ $religion->id }}">{{ $religion->name }}</option>
@@ -203,7 +203,7 @@
                             </div>
                             <div class="form-group my-2">
                                 <label for="familyStatus" class="form-label"><b>Status Dalam Keluarga :</b></label>
-                                <select name="familyStatus" id="familyStatus" class="form-select" required>
+                                <select name="familyStatus" id="familyStatus" class="form-select" >
                                     <option selected></option>
                                     @foreach ( $familyStatuses as $familyStatus )
                                         <option value="{{ $familyStatus->id }}">{{ $familyStatus->name }}</option>
