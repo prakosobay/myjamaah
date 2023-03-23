@@ -120,7 +120,7 @@ class LaporanPetugasController extends Controller
 
         try {
 
-            $create = MasterPetugas::create([
+            MasterPetugas::create([
                 'name' => $request->name,
                 'updated_by' => auth()->user()->id,
                 'created_by' => auth()->user()->id,
@@ -157,8 +157,8 @@ class LaporanPetugasController extends Controller
         // dd($name);
         $petugas = LaporanPetugas::whereHas('mPetugasId', function ($q) use ($name){
             $q->where('id', $name);
-        })->with('mPetugasId:id,name')->select('m_petugas_id', 'duty', 'nominal', 'date', 'status')->get();
-        // return $petugas;
+        })->with('mPetugasId:id,name')->get();
+
         return Excel::download(new LaporanPetugasExport($petugas), 'Data.xlsx');
     }
 }

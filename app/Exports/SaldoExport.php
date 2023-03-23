@@ -2,10 +2,10 @@
 
 namespace App\Exports;
 
-use Maatwebsite\Excel\Concerns\{FromCollection, WithHeadings, WithStyles};
+use Maatwebsite\Excel\Concerns\{FromCollection, WithHeadings, WithStyles, ShouldAutoSize};
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class SaldoExport implements FromCollection, WithHeadings, WithStyles
+class SaldoExport implements FromCollection, WithHeadings, WithStyles, ShouldAutoSize
 {
     /**
     * @return \Illuminate\Support\Collection

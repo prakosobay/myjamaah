@@ -90,12 +90,15 @@ Route::middleware(['auth'])->group(function(){
         Route::post('citizen/delete/{id}', 'delete')->name('citizenDelete');
         Route::post('citizen/import', 'import')->name('citizenImport');
         Route::get('citizen/export', 'export')->name('citizenExport');
+        Route::get('citizen/yajra', 'yajra')->name('yajraCitizen');
     });
 
     Route::controller(SaldoKasController::class)->group(function () {
         Route::post('saldo-kas/store', 'storeTransaction')->name('storeTransaction');
         Route::post('saldo-kas/filter', 'storeFilter')->name('storeFilter');
-
+        Route::post('saldo-kas/delete/{id}', 'delete')->name('saldoKas.delete');
+        Route::post('saldo-kas/update/{id}', 'update')->name('saldoKas.update');
+        Route::get('saldo-kas/edit/{id}', 'edit')->name('saldoKas.edit');
         Route::get('saldo-kas/add', 'addTransaction')->name('addTransaction');
         Route::get('saldo-kas/table', 'tableTransaction')->name('tableTransaction');
         Route::get('saldo-kas/yajra', 'yajraTransaction')->name('yajraTransaction');
@@ -107,12 +110,13 @@ Route::middleware(['auth'])->group(function(){
         Route::get('laporan/petugas/table', 'table')->name('tableLaporanPetugas');
         Route::get('laporan/petugas/yajra', 'yajra')->name('yajraLaporanPetugas');
         Route::get('petugas/table', 'petugas_table')->name('petugasTable');
-        Route::get('laporan/petugas/edit/{id}', 'edit')->name('petugas.edit');
+        Route::get('laporan/petugas/edit/{id}', 'edit')->name('petugasEdit');
 
         Route::post('laporan/petugas/export/excel', 'export_excel')->name('laporanPetugas.exportExcel');
         Route::post('petugas/store', 'petugas_store')->name('petugasStore');
+        Route::post('petugas/delete/{id}', 'petugas_delete')->name('petugasDelete');
         Route::post('laporan/petugas/update/{id}', 'update')->name('petugas.update');
-        Route::post('petugas/delete/{id}', 'delete')->name('petugas.delete');
+        Route::post('laporan/petugas/delete/{id}', 'delete')->name('laporanPetugasDelete');
         Route::post('laporan-petugas/store', 'store')->name('storeLaporanPetugas');
     });
 

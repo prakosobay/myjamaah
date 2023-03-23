@@ -4,11 +4,12 @@ namespace App\Imports;
 
 use App\Models\{Citizen, MasterEducation, MasterFamilyStatus, MasterSalary, MasterJob, MasterReligion, MasterResidenceStatus, MasterSocialStatus};
 use Illuminate\Support\{Collection, Str, Carbon};
-use Maatwebsite\Excel\Concerns\{ToCollection, WithHeadingRow, WithStartRow};
+use Maatwebsite\Excel\Concerns\{ToCollection, WithHeadingRow, WithStartRow, Importable, SkipsEmptyRows};
 use PhpOffice\PhpSpreadsheet\Exception;
 
-class CitizenImport implements ToCollection, WithHeadingRow, WithStartRow
+class CitizenImport implements ToCollection, WithHeadingRow, WithStartRow, SkipsEmptyRows
 {
+    use Importable;
     /**
     * @param Collection $collection
     */
@@ -21,57 +22,65 @@ class CitizenImport implements ToCollection, WithHeadingRow, WithStartRow
         // die;
         foreach($rows as $row) {
 
-            $convert = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[6]));
+            if($row[6]) {
 
-            $job = MasterJob::where('name', $row[13])->select('id')->first();
-            if(!$job && !isset($job) && empty($job) && $job === ''){
-                throw new Exception('Pekerjaan Belum Terdaftar!');
-                // return back()->with('failed', 'Pekerjaan Belum Terdaftar!');
-                // dd("a");
-                // die;
+                $convert = Carbon::instance(\PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($row[6]));
             }
 
-            $salary = MasterSalary::where('range', $row[14])->select('id')->first();
-            // dd($salary->id);
-            if(!$salary && !isset($salary) && empty($salary) && $salary === ''){
-                throw new Exception('Penghasilan Belum Terdaftar!');
-                // dd("b");
-                // die;
+            if($row[13]) {
+
+                $job = MasterJob::where('name', $row[13])->select('id')->first();
+                if(!$job && !isset($job) && $job == null){
+                    throw new Exception($row[13] . ' Belum Terdaftar!');
+                }
             }
 
-            $religion = MasterReligion::where('name', $row[15])->select('id')->first();
-            if(!$religion && !isset($religion) && empty($religion) && $religion === ''){
-                throw new Exception('Agama Belum Terdaftar!');
-                // dd("c");
-                // die;
+            if($row[14]) {
+
+                $salary = MasterSalary::where('range', $row[14])->select('id')->first();
+                if(!$salary && !isset($salary) && $salary == null){
+                    throw new Exception($row[14] . ' Belum Terdaftar!');
+                }
             }
 
-            $familyStatus = MasterFamilyStatus::where('name', $row[18])->select('id')->first();
-            if(!$familyStatus && !isset($familyStatus) && empty($familyStatus) && $familyStatus === ''){
-                throw new Exception('Status dalam Keluarga Belum Terdaftar!');
-                // dd("d");
-                // die;
+            if($row[15]) {
+
+                $religion = MasterReligion::where('name', $row[15])->select('id')->first();
+                if(!$religion && !isset($religion) && $religion == null){
+                    throw new Exception($row[15] . ' Belum Terdaftar!');
+                }
             }
 
-            $education = MasterEducation::where('name', $row[19])->select('id')->first();
-            if(!$education && !isset($education) && empty($education) && $education === ''){
-                throw new Exception('Pendidikan Belum Terdaftar!');
-                // dd("e");
-                // die;
+            if($row[18]) {
+
+                $familyStatus = MasterFamilyStatus::where('name', $row[18])->select('id')->first();
+                if(!$familyStatus && !isset($familyStatus) && $familyStatus == null){
+                    throw new Exception($row[18] . ' Belum Terdaftar!');
+                }
             }
 
-            $residenceStatus = MasterResidenceStatus::where('name', $row[20])->select('id')->first();
-            if(!$residenceStatus && !isset($residenceStatus) && empty($residenceStatus) && $residenceStatus === ''){
-                throw new Exception('Status Tempat Tinggal Belum Terdaftar!');
-                // dd("f");
-                // die;
+            if($row[19]) {
+
+                $education = MasterEducation::where('name', $row[19])->select('id')->first();
+                if(!$education && !isset($education) && $education == null){
+                    throw new Exception($row[19] . ' Belum Terdaftar!');
+                }
             }
 
-            $socialStatus = MasterSocialStatus::where('name', $row[21])->select('id')->first();
-            if(!$socialStatus && !isset($socialStatus) && empty($socialStatus) && $socialStatus === ''){
-                throw new Exception('Status Sosial Belum Terdaftar!');
-                // dd("g");
-                // die;
+            if($row[20]) {
+
+                $residenceStatus = MasterResidenceStatus::where('name', $row[20])->select('id')->first();
+                if(!$residenceStatus && !isset($residenceStatus) && $residenceStatus == null){
+                    throw new Exception($row[20] . ' Belum Terdaftar!');
+                }
+            }
+
+            if($row[21]) {
+
+                $socialStatus = MasterSocialStatus::where('name', $row[21])->select('id')->first();
+                if(!$residenceStatus && !isset($residenceStatus) && $socialStatus == null){
+                    throw new Exception($row[21] . ' Belum Terdaftar!');
+                }
             }
 
             $citizen = Citizen::where('nik_number', $row[4])->first();
@@ -80,52 +89,52 @@ class CitizenImport implements ToCollection, WithHeadingRow, WithStartRow
                 $citizen->update([
                     'kk_number' => $row[3],
                     'name' => $row[5],
-                    'birthday' => $convert,
+                    'birthday' => (isset($convert) ? $convert : null),
                     'gender' => $row[7],
                     'street' => $row[8],
                     'rt' => $row[9],
                     'rw' => $row[10],
                     'house_number' => $row[11],
                     'phone' => $row[12],
-                    'm_job_id' => $job->id,
-                    'm_salary_id' => $salary->id,
-                    'm_religion_id' => $religion->id,
+                    'm_job_id' => (isset($job) ? $job->id : null),
+                    'm_salary_id' => (isset($salary) ? $salary->id : null),
+                    'm_religion_id' => (isset($religion) ? $religion->id : null),
                     'marriage_status' => $row[17],
-                    'm_family_status_id' => $familyStatus->id,
-                    'm_education_id' => $education->id,
-                    'm_residence_status_id' => $residenceStatus->id,
-                    'm_social_status_id' => $socialStatus->id,
+                    'm_family_status_id' => (isset($familyStatus) ? $familyStatus->id : null),
+                    'm_education_id' => (isset($education) ? $education->id : null),
+                    'm_residence_status_id' => (isset($residenceStatus) ? $residenceStatus->id : null),
+                    'm_social_status_id' => (isset($socialStatus) ? $socialStatus->id : null),
                     'updated_by' => auth()->user()->id,
                 ]);
+
             } else {
 
                 $id = Str::uuid();
-                $tes = Citizen::create([
+                Citizen::insert([
                     'id' => $id,
                     'nik_number' => $row[4],
                     'kk_number' => $row[3],
                     'name' => $row[5],
-                    'birthday' => $convert,
+                    'birthday' => (isset($convert) ? $convert : null),
                     'gender' => $row[7],
                     'street' => $row[8],
                     'rt' => $row[9],
                     'rw' => $row[10],
                     'house_number' => $row[11],
                     'phone' => $row[12],
-                    'm_job_id' => $job->id,
-                    'm_salary_id' => $salary->id,
-                    'm_religion_id' => $religion->id,
+                    'm_job_id' => (isset($job) ? $job->id : null),
+                    'm_salary_id' => (isset($salary) ? $salary->id : null),
+                    'm_religion_id' => (isset($religion) ? $religion->id : null),
                     'marriage_status' => $row[17],
-                    'm_family_status_id' => $familyStatus->id,
-                    'm_education_id' => $education->id,
-                    'm_residence_status_id' => $residenceStatus->id,
-                    'm_social_status_id' => $socialStatus->id,
+                    'm_family_status_id' => (isset($familyStatus) ? $familyStatus->id : null),
+                    'm_education_id' => (isset($education) ? $education->id : null),
+                    'm_residence_status_id' => (isset($residenceStatus) ? $residenceStatus->id : null),
+                    'm_social_status_id' => (isset($socialStatus) ? $socialStatus->id : null),
                     'updated_by' => auth()->user()->id,
                     'created_by' => auth()->user()->id,
-                    // 'updated_at' => now(),
-                    // 'created_at' => now(),
+                    'created_at' => now(),
+                    'updated_at' => now(),
                 ]);
-                // dd($tes);
             }
         }
     }

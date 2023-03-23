@@ -13,11 +13,11 @@
             <div class="row input-daterange">
                 <div class="col-md-3">
                     <label for="from_date" class="form-label"><b>Tanggal Mulai :</b></label>
-                    <input type="date" name="from_date" id="from_date" class="form-control" placeholder="From Date" required />
+                    <input type="date" name="from_date" id="from_date" class="form-control" placeholder="From Date" />
                 </div>
                 <div class="col-md-3">
                     <label for="to_date" class="form-label"><b>Tanggal Sampai :</b></label>
-                    <input type="date" name="to_date" id="to_date" class="form-control" placeholder="To Date" required />
+                    <input type="date" name="to_date" id="to_date" class="form-control" placeholder="To Date" />
                 </div>
                 <div class="col-md-3">
                     <label for="type" class="form-label"><b>Tipe Transaksi :</b></label>
@@ -35,6 +35,18 @@
             </div>
         </div>
 
+        @if (session('success'))
+            <div class="alert alert-success mx-2 my-2 text-center">
+                <b>{{ session('success') }}</b>
+            </div>
+        @endif
+
+        @if (session('failed'))
+            <div class="alert alert-danger mx-2 my-2 text-center">
+                <b>{{ session('failed') }}</b>
+            </div>
+        @endif
+
         {{-- Table --}}
         <div class="card-body">
             <div class="table-responsive">
@@ -46,6 +58,7 @@
                             <th>Tipe</th>
                             <th>Nama Transaksi</th>
                             <th class="currency">Nominal (Rp)</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody class="isi-table text-center">
@@ -93,6 +106,7 @@
     <script>
         $(document).ready( function () {
 
+            load_data();
             function load_data(from_date = '', to_date = '', type = ''){
                 $('#transaction').DataTable({
                     processing: true,
@@ -106,12 +120,14 @@
                         { data: 'date_trans', name: 'date_trans' },
                         { data: 'type', name: 'type' },
                         { data: 'name', name: 'name' },
-                        { data: 'val', name: 'val' }
+                        { data: 'val', name: 'val' },
+                        { data: 'action', name: 'action', orderable: false, searchable: false }
                     ]
                 });
             }
 
             function load_data_total(from_date = '', to_date = '', type = ''){
+                let income, expense, total;
                 $.ajax({
                     type: 'GET', //THIS NEEDS TO BE GET
                     url: '{{ route('totalSaldo')}}',
@@ -121,18 +137,18 @@
 
                             for (let i = 0; i < data.length; i++) {
                                if(data[i].type_transaction === 'Pemasukan'){
-                                   var income = data[i].total;
-                                   console.log(parseInt(income).toLocaleString())
+                                   income = data[i].total;
+                                //    console.log(parseInt(income).toLocaleString())
                                     $('#pemasukan').html(` Rp. ${parseInt(income).toLocaleString()}`);
                                }
 
                                else if(data[i].type_transaction === 'Pengeluaran'){
 
-                                    var expense = data[i].total;
+                                    expense = data[i].total;
                                     $('#pengeluaran').html(` Rp. ${parseInt(expense).toLocaleString()}`);
                                }
 
-                               var total = income - expense;
+                                total = income - expense;
                                 $('#saldo_akhir').html(` Rp. ${parseInt(total).toLocaleString()}`);
                             }
                         }
@@ -144,8 +160,6 @@
                     }
                 });
             }
-
-
 
             $('#filter').click(function() {
                 var from_date = $('#from_date').val();
