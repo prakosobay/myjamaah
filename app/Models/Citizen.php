@@ -35,6 +35,7 @@ class Citizen extends Model
         'death_date',
         'created_by',
         'updated_by',
+        'ket',
     ];
 
     public function createdBy()

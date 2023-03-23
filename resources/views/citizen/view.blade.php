@@ -94,7 +94,7 @@
                         </div>
                         @if($citizen->is_death == true)
                             <div class="form-group my-2">
-                                <label for="isDeath" class="form-label"><b>Keterangan :</b></label>
+                                <label for="isDeath" class="form-label"><b>Riwayat Hidup :</b></label>
                                 <input type="text" id="isDeath" class="form-control" value="Meninggal" readonly>
                             </div>
                         @endif
@@ -130,7 +130,11 @@
                         </div>
                         <div class="form-group my-2">
                             <label for="age" class="form-label"><b>Umur :</b></label>
-                            <input type="text" id="age" value="{{ $age }} Tahun" class="form-control" readonly>
+                            <input type="text" id="age" value="{{ isset($age) }} Tahun" class="form-control" readonly>
+                        </div>
+                        <div class="form-group my-2">
+                            <label for="ket" class="form-label"><b>Keterangan :</b></label>
+                            <input type="text" id="ket" value="{{ isset($citizen->ket) }}" class="form-control" readonly>
                         </div>
                     </div>
                 </div>

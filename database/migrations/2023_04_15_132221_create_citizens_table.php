@@ -37,6 +37,7 @@ return new class extends Migration
             $table->string('marriage_status')->nullable();
             $table->boolean('is_death')->nullable();
             $table->date('death_date')->nullable();
+            $table->string('ket')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

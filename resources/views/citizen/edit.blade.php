@@ -201,7 +201,7 @@
                             </div>
                             @if($citizen->is_death)
                                 <div class="form-group my-2">
-                                    <label for="flexCheckChecked" class="form-label"><b>Keterangan :</b></label>
+                                    <label for="flexCheckChecked" class="form-label"><b>Riwayat Hidup :</b></label>
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value="1" id="flexCheckChecked" name="is_death" checked>
                                         <label class="form-check-label" for="flexCheckChecked">Meninggal</label>
@@ -209,7 +209,7 @@
                                 </div>
                             @else
                                 <div class="form-group my-2">
-                                    <label for="flexCheckDefault" class="form-label"><b>Keterangan :</b></label>
+                                    <label for="flexCheckDefault" class="form-label"><b>Riwayat Hidup :</b></label>
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value="1" id="flexCheckDefault" name="is_death">
                                         <label class="form-check-label" for="flexCheckDefault">Meninggal</label>
@@ -295,6 +295,16 @@
                             <div class="form-group my-2">
                                 <label for="age" class="form-label"><b>Umur :</b></label>
                                 <input type="text" id="age" value="{{ $age }} Tahun" class="form-control" readonly>
+                            </div>
+                            <div class="form-group my-2">
+                                <label for="ket" class="form-label"><b>Keterangan :</b></label>
+                                <select name="ket" id="ket" class="form-select">
+                                    <option value="{{ $citizen->ket }}">{{ $citizen->ket }}</option>
+                                    <option value=""></option>
+                                    <option value="Yatim">Yatim</option>
+                                    <option value="Piatu">Piatu</option>
+                                    <option value="Yatim Piatu">Yatim Piatu</option>
+                                </select>
                             </div>
                         </div>
                     </div>

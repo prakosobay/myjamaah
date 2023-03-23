@@ -210,6 +210,15 @@
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="form-group my-2">
+                                <label for="ket" class="form-label"><b>Keterangan :</b></label>
+                                <select name="ket" id="ket" class="form-select">
+                                    <option selected value=""></option>
+                                    <option value="Yatim">Yatim</option>
+                                    <option value="Piatu">Piatu</option>
+                                    <option value="Yatim Piatu">Yatim Piatu</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
 

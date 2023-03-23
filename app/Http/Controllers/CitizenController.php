@@ -60,6 +60,7 @@ class CitizenController extends Controller
                 'm_family_status_id' => $request->familyStatus,
                 'is_death' => $request->is_death,
                 'death_date' => $request->death_date,
+                'ket' => $request->ket,
                 'created_by' => auth()->user()->id,
                 'updated_by' => auth()->user()->id,
             ]);
@@ -102,6 +103,7 @@ class CitizenController extends Controller
                 'is_death' => $request->is_death,
                 'death_date' => $request->death_date,
                 'updated_by' => auth()->user()->id,
+                'ket' => $request->ket,
             ]);
 
             DB::commit();
