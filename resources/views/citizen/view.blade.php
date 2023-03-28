@@ -42,7 +42,7 @@
                     <div class="col-4">
                         <div class="form-group my-2">
                             <label for="kk" class="form-label"><b>No. KK :</b></label>
-                            <input type="text" id="kk" name="kk" value="{{ isset($citizen->kk_number) ? $citizen->kk : null }}" class="form-control" readonly>
+                            <input type="text" id="kk" name="kk" value="{{ isset($citizen->kk_number) ? $citizen->kk_number : null }}" class="form-control" readonly>
                         </div>
                         <div class="form-group my-2">
                             <label for="phone" class="form-label"><b>No. Telepon :</b></label>
@@ -130,11 +130,11 @@
                         </div>
                         <div class="form-group my-2">
                             <label for="age" class="form-label"><b>Umur :</b></label>
-                            <input type="text" id="age" value="{{ isset($age) }} Tahun" class="form-control" readonly>
+                            <input type="text" id="age" value="{{ $age }} Tahun" class="form-control" readonly>
                         </div>
                         <div class="form-group my-2">
                             <label for="ket" class="form-label"><b>Keterangan :</b></label>
-                            <input type="text" id="ket" value="{{ isset($citizen->ket) }}" class="form-control" readonly>
+                            <input type="text" id="ket" value="{{ $citizen->ket }}" class="form-control" readonly>
                         </div>
                     </div>
                 </div>

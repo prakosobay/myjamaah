@@ -221,17 +221,12 @@
                         <div class="col-4">
                             <div class="form-group my-2">
                                 <label for="salary" class="form-label"><b>Penghasilan Per Bulan :</b></label>
-                                <select name="salary" id="salary" class="form-select @error('salary') is-invalid @enderror" >
-                                    <option value="{{ isset($citizen->mSalaryId->id) ? $citizen->mSalaryId->id : null }}">{{ isset($citizen->mSalaryId->name) ? $citizen->mSalaryId->name : null }}</option>
+                                <select name="salary" id="salary" class="form-select">
+                                    <option value="{{ isset($citizen->mSalaryId->id) ? $citizen->mSalaryId->id : null }}">{{ isset($citizen->mSalaryId->range) ? $citizen->mSalaryId->range : null }}</option>
                                     @foreach ( $salaries as $salary )
                                         <option value="{{ $salary->id }}">{{ $salary->range }}</option>
                                     @endforeach
                                 </select>
-                                @error('salary')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
                             </div>
                             <div class="form-group my-2">
                                 <label for="marriageStatus" class="form-label"><b>Status Perkawinan :</b></label>

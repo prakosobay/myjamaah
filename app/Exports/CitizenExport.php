@@ -23,37 +23,6 @@ class CitizenExport implements FromCollection, WithStyles, WithHeadings, WithMap
     public function collection()
     {
         return $this->citizen;
-        // return $this->citizen->map(function ($c, $index) {
-        //     return [
-        //         'No.' => $index + 1,
-        //         'Nama Lengkap' => $c->name,
-        //         'Tanggal Lahir' => $c->birthday,
-        //         'No. KK' => $c->kk_number,
-        //         'NIK' => $c->nik_number,
-        //         'Jenis Kelamin' => $c->gender,
-        //         'Umur' => function () use ($c){
-        //             $now = Carbon::now();
-        //             $ultah = Carbon::parse($c->birthday);
-        //             $age = $ultah->diffInYears($now);
-
-        //             return $age;
-        //         },
-        //         'Jalan' => $c->street,
-        //         'RT' => $c->rt,
-        //         'RW' => $c->rw,
-        //         'No. Rumah' => $c->house_number,
-        //         'No. Telepon' => $c->phone,
-        //         'Status Pernikahan' => $c->marriage_status,
-        //         'Pendidikan' => $c->mEducationId->name,
-        //         'Pekerjaan' => $c->mJobId->name,
-        //         'Penghasilan' => $c->mSalaryId->range,
-        //         'Agama' => $c->mReligionId->name,
-        //         'Status Keluarga' => $c->mFamilyStatusId->name,
-        //         'Status Tempat Tinggal' => $c->mResidenceStatusId->name,
-        //         'Status Sosial' => $c->mSocialStatusId->name,
-        //         'Tanggal Meninggal' => $c->death_date,
-        //     ];
-        // });
     }
 
     public function getNow()
@@ -89,6 +58,7 @@ class CitizenExport implements FromCollection, WithStyles, WithHeadings, WithMap
             'Status Keluarga',
             'Status Tempat Tinggal',
             'Status Sosial',
+            'Keterangan',
             'Tanggal Meninggal',
         ];
     }
@@ -116,6 +86,7 @@ class CitizenExport implements FromCollection, WithStyles, WithHeadings, WithMap
             isset($citizen->mFamilyStatusId->name) ? $citizen->mFamilyStatusId->name : null,
             isset($citizen->mResidenceStatusId->name) ? $citizen->mResidenceStatusId->name : null,
             isset($citizen->mSocialStatusId->name) ? $citizen->mSocialStatusId->name : null,
+            $citizen->ket,
             $citizen->death_date,
         ];
     }
